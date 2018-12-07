@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.futto.app">
+
+    <uses-sdk
+        android:minSdkVersion="16"
+        android:targetSdkVersion="23" />
+
+    <!-- GPS and network-location service -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <!-- voice recording -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <!-- network and upload -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- starting the background service at boot. -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!-- bluetooth proximity -->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <!-- <uses-permission android:name="android.permission.BLUETOOTH_PRIVILEGED" /> -->
+    <!-- get own phone number -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+    <!-- Permission used in android 6+ for being whitelisted for app standby -->
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+    <!-- as of the android 6 compatibility update, Beiwe no longer supports installation onto external media -->
+    <!-- <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> -->
+    <!-- Power management and monitoring, not sure where this would be used... -->
+    <uses-permission android:name="android.permission.BATTERY_STATS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="${appName}${appNameSuffix}"
+        android:theme="@style/AppTheme">
+
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <!-- ACTIVITIES -->
+
+        <activity
+            android:name=".ui.LoadingActivity"
+            android:label="${appName}${appNameSuffix}">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".survey.AudioRecorderActivity"
+            android:label="@string/title_activity_audio_recorder"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".survey.AudioRecorderEnhancedActivity"
+            android:label="@string/title_activity_audio_recorder"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".survey.SurveyActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="@string/title_activity_survey" />
+        <activity
+            android:name=".ui.DebugInterfaceActivity"
+            android:label="@string/title_activity_debug_interface" />
+        <activity
+            android:name=".ui.user.LoginActivity"
+            android:label="@string/title_activity_login" />
+        <activity
+            android:name=".ui.registration.ForgotPasswordActivity"
+            android:label="@string/title_activity_forgot_password" />
+        <activity
+            android:name=".ui.registration.RegisterActivity"
+            android:label="@string/title_activity_register" />
+        <activity
+            android:name=".ui.user.MainMenuActivity"
+            android:label="@string/title_activity_main_menu" />
+        <activity
+            android:name=".ui.user.GraphActivity"
+            android:label="@string/title_activity_graph" />
+
+        <!-- SERVICE -->
+
+        <service
+            android:name=".BackgroundService"
+            android:exported="false"
+            android:label="BackgroundService-thing" />
+
+        <!-- RECEIVERS -->
+
+        <receiver android:name=".listeners.BootListener">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".listeners.BluetoothListener" />
+        <receiver android:name=".listeners.PowerStateListener">
+            <intent-filter>
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+                <action android:name="android.intent.action.ACTION_SHUTDOWN" />
+                <action android:name="android.intent.action.ACTION_REBOOT" />
+                <action android:name="android.intent.action.AIRPLANE_MODE" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name=".ui.registration.ResetPasswordActivity"
+            android:label="@string/title_activity_reset_password" />
+        <activity
+            android:name=".ui.user.AboutActivityLoggedOut"
+            android:label="@string/title_activity_about" />
+        <activity
+            android:name=".ui.user.AboutActivityLoggedIn"
+            android:label="@string/title_activity_about" />
+        <activity
+            android:name=".ui.registration.PhoneNumberEntryActivity"
+            android:label="@string/title_activity_phone_number_entry" />
+        <activity
+            android:name=".ui.registration.ConsentFormActivity"
+            android:label="@string/title_activity_consent_form" />
+        <activity
+            android:name=".ui.user.MapsActivity"
+            android:label="@string/title_activity_maps" />
+        <activity
+            android:name=".ui.user.DirectionsActivity"
+            android:label="@string/title_activity_directions"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="redirect"
+                    android:scheme="org.beiwe.app" />
+            </intent-filter>
+        </activity>
+
+        <service android:name=".fcm.FuttoFirebaseInstanceIdService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+        <!-- Service listening for any incoming messages -->
+        <service android:name=".fcm.FuttoFirebaseMessageService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <activity android:name=".ui.user.JobsActivity" />
+        <activity android:name=".ui.coupon.NotificationActivity"></activity>
+        <activity android:name=".ui.coupon.BarcodeActivity"></activity>
+    </application>
+
+</manifest>

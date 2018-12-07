@@ -1,0 +1,129 @@
+apply plugin: 'com.android.application'
+
+def keystorePropertiesFile = rootProject.file("private/keystore.properties");
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
+android {
+    signingConfigs {
+        config {
+            storeFile file('/Users/hantsechiou/ridesharing-android/keystore')
+            keyAlias 'alias'
+            keyPassword '170191sen'
+            storePassword '170191sen'
+        }
+    }
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
+    defaultConfig {
+        vectorDrawables.useSupportLibrary = true
+        applicationId "org.futto.app"
+        minSdkVersion 18
+        targetSdkVersion 27
+        versionCode 40      //TODO: update this Beiwe version code for new releases
+        versionName '2.5.4'  //TODO: update this Beiwe version number for new releases
+        setProperty("archivesBaseName", "Futto-$versionName")
+        multiDexEnabled true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            signingConfig signingConfigs.config
+            manifestPlaceholders = [appNameSuffix: ""]
+            buildConfigField("boolean", "APP_IS_BETA", "false")
+            buildConfigField("boolean", "APP_IS_DEV", "false")
+            buildConfigField("String", "SENTRY_DSN", "\"" + keystoreProperties['releaseDSN'] + "\"")
+            debuggable true
+        }
+        beta {
+            versionNameSuffix("-beta")
+            signingConfig signingConfigs.config
+            manifestPlaceholders = [appNameSuffix: "-beta"]
+            buildConfigField("boolean", "APP_IS_BETA", "false")
+            buildConfigField("boolean", "APP_IS_DEV", "true")
+            buildConfigField("String", "SENTRY_DSN", "\"" + keystoreProperties['betaDSN'] + "\"")
+            debuggable true
+        }
+        development {
+            versionNameSuffix("-development")
+            signingConfig signingConfigs.config
+            manifestPlaceholders = [appNameSuffix: "-development"]
+            buildConfigField("boolean", "APP_IS_BETA", "false")
+            buildConfigField("boolean", "APP_IS_DEV", "true")
+            buildConfigField("String", "SENTRY_DSN", "\"" + keystoreProperties['developmentDSN'] + "\"")
+            debuggable true
+        }
+    }
+    flavorDimensions "customizableServerUrl"
+    productFlavors {
+        googlePlayStore {
+            dimension "customizableServerUrl"
+            manifestPlaceholders = [appName: "Futto"]
+            buildConfigField("boolean", "CUSTOMIZABLE_SERVER_URL", 'true')
+        }
+        onnelaLabServer {
+            dimension "customizableServerUrl"
+            manifestPlaceholders = [appName: "Futto"]
+            buildConfigField("boolean", "CUSTOMIZABLE_SERVER_URL", "false")
+        }
+    }
+    useLibrary "org.apache.http.legacy"
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+// Don't include the default "debug" build variant as an option
+android.variantFilter { variant ->
+    if (variant.buildType.name.equals('debug')) {
+        variant.setIgnore(true);
+    }
+}
+
+repositories {
+    maven {
+        url "https://s3.amazonaws.com/repo.commonsware.com"
+    }
+}
+
+configurations {
+    all {
+        exclude module: 'httpclient'
+    }
+}
+
+dependencies {
+    implementation 'com.android.support:multidex:1.0.3'
+    compile 'io.sentry:sentry-android:1.7.3'
+    implementation 'com.google.android.gms:play-services-maps:11.8.0'
+    implementation 'com.google.android.gms:play-services-places:11.8.0'
+    implementation 'com.android.support:support-v4:25.4.0'
+    implementation 'com.android.support:recyclerview-v7:25.4.0'
+    implementation 'com.google.firebase:firebase-messaging:11.8.0'
+    compile 'com.google.firebase:firebase-core:11.8.0'
+    compile 'com.google.android.gms:play-services-location:11.8.0'
+    compile 'com.jakewharton:butterknife:8.4.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
+    implementation 'com.android.support:design:25.3.1'
+    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.google.maps.android:android-maps-utils:0.4+'
+    compile 'com.uber.sdk:rides-android:0.5.3'
+    compile 'com.commonsware.cwac:anddown:0.3.0'
+    implementation 'com.android.support:appcompat-v7:25.2.0'
+    compile 'com.android.support:design:27.1.1'
+    implementation 'com.muddzdev:styleabletoast:2.1.2'
+    implementation('com.amazonaws:aws-android-sdk-mobile-client:2.6.+@aar') { transitive = true }
+    implementation 'com.amazonaws:aws-android-sdk-core:2.6.+'
+    implementation 'com.amazonaws:aws-android-sdk-s3:2.6.+'
+    implementation 'com.amazonaws:aws-android-sdk-ddb:2.6.+'
+    implementation 'com.amazonaws:aws-android-sdk-ddb-mapper:2.6.+'
+    implementation 'com.amazonaws:aws-android-sdk-ddb-document:2.6.+'
+    implementation files('libs/zxing-2.1.jar')
+}
+
+
+apply plugin: 'com.google.gms.google-services'

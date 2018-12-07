@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_first_fragment"
+            android:icon="@drawable/find_location"
+            android:title="Search Route" />
+        <item
+            android:id="@+id/nav_second_fragment"
+            android:icon="@drawable/find_job"
+            android:title="Find Job" />
+        <item
+            android:id="@+id/nav_third_fragment"
+            android:icon="@drawable/survey_history"
+            android:title="Survey History" />
+        <item
+            android:id="@+id/nav_four_fragment"
+            android:icon="@drawable/edit_survey"
+            android:title="Edit Survey" />
+        <!--<item-->
+            <!--android:id="@+id/nav_five_fragment"-->
+            <!--android:icon="@drawable/ic_notifications_black"-->
+            <!--android:title="Notification" />-->
+    </group>
+</menu>

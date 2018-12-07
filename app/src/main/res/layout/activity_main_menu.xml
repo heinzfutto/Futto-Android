@@ -1,0 +1,198 @@
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_DrawerLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#f5f5f5"
+        android:orientation="vertical"
+        tools:context="org.futto.app.ui.user.MainMenuActivity">
+
+        <include
+            layout="@layout/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:background="@drawable/mom2"
+            android:baselineAligned="false"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="70dp" />
+
+            <TextView
+                android:id="@+id/application_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/roboto_bold"
+                android:gravity="start"
+                android:paddingEnd="20dp"
+                android:paddingStart="20dp"
+                android:paddingTop="20dp"
+                android:text="@string/hello"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#ffffff"
+                android:textSize="25sp"
+                android:textStyle="bold"></TextView>
+
+            <TextView
+                android:id="@+id/username_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/roboto_bold"
+                android:gravity="start"
+                android:paddingEnd="20dp"
+                android:paddingStart="20dp"
+                android:text="@string/username"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#ffffff"
+                android:textSize="25sp"
+                android:textStyle="bold"></TextView>
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/Placeholder1"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp" />
+
+        <LinearLayout
+            android:onClick="notification"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginEnd="15dp"
+            android:layout_marginStart="15dp"
+            android:background="@drawable/rounded_noti_btn"
+            android:baselineAligned="false"
+            android:orientation="horizontal"
+            android:elevation="3dp"
+            android:padding="1dp">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/username"
+                android:padding="3dp"
+                app:srcCompat="@drawable/ic_notifications" />
+
+            <TextView
+                android:id="@+id/noti_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/roboto_bold"
+                android:gravity="start"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                android:text="@string/noti_str"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="	#696969"
+                android:textSize="15sp"
+                android:textStyle="bold"></TextView>
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/Placeholder2"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp" />
+
+        <LinearLayout
+            android:id="@+id/btnGroup"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:baselineAligned="false"
+            android:background="#d4d4d4"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:baselineAligned="false"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/linearLayoutFindRoute"
+                    android:background="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:baselineAligned="false"
+                    android:onClick="transit"
+                    android:orientation="vertical"
+                    android:padding="1dp"
+                    android:src="@drawable/search_route"></ImageButton>
+
+                <ImageButton
+                    android:background="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:baselineAligned="false"
+                    android:onClick="web"
+                    android:orientation="vertical"
+                    android:padding="1dp"
+                    android:src="@drawable/search_job"></ImageButton>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_weight="1"
+                android:layout_marginTop="1dp"
+                android:background="@color/white"
+                android:baselineAligned="false"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:background="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:baselineAligned="false"
+                    android:onClick="featureIsNotAvailable"
+                    android:orientation="vertical"
+                    android:src="@drawable/new_suvey"></ImageButton>
+
+                <ImageButton
+                    android:background="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:baselineAligned="false"
+                    android:onClick="notification"
+                    android:orientation="vertical"
+                    android:src="@drawable/coupon"></ImageButton>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nvView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@android:color/white"
+        app:headerLayout="@layout/nav_header"
+        app:menu="@menu/drawer_view" />
+</android.support.v4.widget.DrawerLayout><!--<Button--><!--android:id="@+id/bWeb"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:layout_marginTop="30dp"--><!--android:onClick="web"--><!--android:text="Jobs" />-->
+
+    <!--<Button--><!--android:id="@+id/bTransit"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:layout_marginTop="10dp"--><!--android:onClick="transit"--><!--android:text="Transit" />-->

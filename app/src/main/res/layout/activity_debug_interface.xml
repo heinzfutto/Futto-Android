@@ -1,0 +1,277 @@
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+	<LinearLayout
+        android:id="@+id/linearLayoutDebug"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="vertical" >
+
+		<TextView
+		    android:id="@+id/debugtext1"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:text="(You cannot trigger recording sessions for data streams that are disabled in the study configuration on studies.beiwe.org)" />
+		
+   	    <Button
+	        android:id="@+id/buttonDownload"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:onClick="runSurveyDownload"
+	        android:text="Check For New/Updated Surveys" />    
+		
+   	    <TextView
+		    android:id="@+id/debugtext3"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:text="The Beiwe app only uploads files that are no longer being written to. Press the 'Make New Files' button before you upload to ensure you get your data ." />
+   	    
+   	    <Button
+	        android:id="@+id/makeNewFiles"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:onClick="makeNewFiles"
+	        android:text="Make New Files" />
+   	    
+   	    <Button
+	        android:id="@+id/buttonUpload"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:onClick="uploadDataFiles"
+	        android:text="Upload Data Files" />
+	    
+   	    <TextView
+		    android:id="@+id/debugtext4"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:text="This next one is probably the button you are looking for...  :)" />
+   	    
+   		<Button
+	        android:id="@+id/buttonPopSurveyNotifications"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:onClick="popSurveyNotifications"
+	        android:text="Trigger All Survey Notifications" />
+	    
+	    <TextView
+		    android:id="@+id/debugtext5"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:text="Triggering a Bluetooth recording will cause the Beiwe app to record local Bluetooth data for the duration set in your study's configuration. Manually triggering a Bluetooth recording event DOES NOT reset the periodic timers for the automatic Bluetooth recordings." />
+	    
+   	    <Button
+	        android:id="@+id/buttonStartBluetooth"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:onClick="bluetoothButtonStart"
+	        android:text="Trigger Bluetooth Scan" />
+
+	    <Button
+	        android:id="@+id/buttonStopBluetooth"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:onClick="bluetoothButtonStop"
+	        android:text="Stop Bluetooth Scan" />
+
+	    <TextView
+		    android:id="@+id/debugtext6"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:text="Triggering a GPS or accelerometer recording will cause the Beiwe app to record that data stream for the duration set in your study's configuration. Manually triggering a GPS or accelerometer recording event DOES reset the periodic timers for that data stream." />
+	    
+	    <Button
+	        android:id="@+id/buttonEnableGPS"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:onClick="gpsOn"
+	        android:text="Trigger GPS Recording" />
+	    
+	    <Button
+	        android:id="@+id/buttonDisableGPS"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:onClick="gpsOff"
+	        android:text="Stop GPS Recording" />
+
+	    <Button
+	        android:id="@+id/buttonEnableAccelerometer"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:onClick="accelerometerOn"
+	        android:text="Trigger Accelerometer Recording" />
+	    
+	    <Button
+	        android:id="@+id/buttonTDisableAccelerometer"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:onClick="accelerometerOff"
+	        android:text="Stop Accelerometer Recording" />
+
+	    <Button
+	        android:id="@+id/buttonWifiScan"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:onClick="scanWifi"
+	        android:text="Trigger Wifi Scan" />
+	    	    	    	    
+	    <TextView
+		    android:id="@+id/debugtext7"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:text="Normal users of the Beiwe app will only see the main menu screen. When You are in the main menu screen you may return to the debug menu at any time by pressing the back button." />
+	    	      
+	    <Button
+	        android:id="@+id/loadMainMenu"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:onClick="loadMainMenu"
+	        android:text="Go To Main Menu" />
+
+		<TextView
+			android:id="@+id/debugtexttwenty"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="Everything below this point is intended for the developers of Beiwe, and really aren't all that interesting. (Well, maybe the crash buttons.)"
+			android:visibility="gone" />
+
+		<Button
+			android:id="@+id/button"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:onClick="testJsonLogicParser"
+			android:text="(dev) Test Json Logic Parser"
+			android:visibility="gone"/>
+
+		<Button
+			android:id="@+id/buttonPrintInternalLog"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:onClick="printInternalLog"
+			android:text="(dev) Log Internal Log"
+		android:visibility="gone"/>
+
+		<Button
+			android:id="@+id/buttonClearInternalLog"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:onClick="clearInternalLog"
+			android:text="(dev) Clear Internal Log"
+			android:visibility="gone"/>
+
+		<Button
+			android:id="@+id/buttonDeleteEverything"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:onClick="deleteEverything"
+			android:text="(dev) Delete ~Everything"
+			android:visibility="gone"/>
+
+		<Button
+			android:id="@+id/buttonListFiles"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:onClick="listFiles"
+			android:text="(dev) List All Files"
+			android:visibility="gone"/>
+
+		<Button
+			android:id="@+id/buttonTimer"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:onClick="buttonTimer"
+			android:text="(dev) Run Start Timer Logic"
+			android:visibility="gone"/>
+
+		<Button
+			android:id="@+id/buttonGetKeyFile"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:onClick="getKeyFile"
+			android:text="(dev) Log Key File"
+			android:visibility="gone"/>
+
+		<Button
+			android:id="@+id/testEncryption"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:onClick="testEncrypt"
+			android:text="(dev) Test encryption"
+			android:visibility="gone"/>
+
+		<Button
+			android:id="@+id/buttonLogDataToggles"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:onClick="logDataToggles"
+			android:text="(dev) Log Data Stream Toggles"
+			android:visibility="gone"/>
+
+		<Button
+			android:id="@+id/buttonAlarmStates"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:onClick="getAlarmStates"
+			android:text="(dev) Log Most Recent Alarm Times"
+			android:visibility="gone"/>
+
+		<Button
+			android:id="@+id/buttonFeaturesEnabled"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:onClick="getEnabledFeatures"
+			android:text="(dev) Log Enabled Features"
+			android:visibility="gone"/>
+
+		<Button
+			android:id="@+id/buttonFeaturesPermissable"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:onClick="getPermissableFeatures"
+			android:text="(dev) Log Permissions"
+			android:visibility="gone"/>
+
+		<Button
+			android:id="@+id/buttonCrashUi"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:onClick="crashUi"
+			android:text="(dev) Crash UI"
+			android:visibility="gone"/>
+
+		<Button
+			android:id="@+id/buttonCrashBackground"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:onClick="crashBackground"
+			android:text="(dev) Crash Background Service"
+			android:visibility="gone"/>
+
+		<Button
+			android:id="@+id/buttonCrashBackgroundInFive"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:onClick="crashBackgroundInFive"
+			android:text="(dev) Crash Background Service in Five"
+			android:visibility="gone"/>
+
+        <Button
+			android:id="@+id/buttonTestManualErrorReport"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:onClick="testManualErrorReport"
+			android:text="(dev) Test Manual Error Report"
+			android:visibility="gone"/>
+
+		<Button
+			android:id="@+id/stopBackgroundService"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:onClick="stopBackgroundService"
+			android:text="(dev) Stop Background Service Safely"
+			android:visibility="gone"/>
+
+	</LinearLayout>
+</ScrollView>

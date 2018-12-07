@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:paddingLeft="10dp"
+        android:text="Test Title" />
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvTitle"
+        android:paddingLeft="10dp"
+        android:text="Test" />
+
+    <TextView
+        android:id="@+id/tvDuration"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:paddingRight="20dp"
+        android:text="Test" />
+
+    <TextView
+        android:id="@+id/tvFare"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/tvDuration"
+        android:paddingRight="20dp"
+        android:text="Test" />
+
+
+</RelativeLayout>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/radioButtonQuestion"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:tag="radioButtonQuestion"
+    android:orientation="vertical" >
+
+	<org.futto.app.survey.MarkDownTextView
+	    android:id="@+id/questionText"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    style="@style/MainTextStyle"
+	    android:padding="20dp"
+	    android:textSize="20sp"
+	    android:text="@string/question_error_text" >
+	</org.futto.app.survey.MarkDownTextView>
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="50dp" >
+    </RadioGroup>
+
+</LinearLayout>

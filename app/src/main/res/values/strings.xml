@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Reference strings in Java code using a line like this:
+    appContext.getResources().getString(R.string.name_of_string) -->
+
+    <!-- General Strings -->
+    <string name="app_name">Futto</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- Permissions Strings -->
+    <string name="permission_registration_read_sms_alert"> In order to register for a study, Futto requires access to some this device\'s telephone services. Please press \"Allow\" when you see a menu requesting permissions to access SMS. Depending on the details of the study, you are allowed to disable this permission in the Futto app\'s preferences after registration is complete.</string>
+
+    <string name="permission_registration_actually_need_sms_alert"> Futto requires SMS permissions in order to register for a study, but you appear to have denied it permission. We are going to bump you to the Futto app\'s settings so that you can manually enable SMS access. </string>
+
+    <string name="power_management_exception_alert"> This permission prompt you are about to see is required to allow Futto to execute in the background. </string>
+    <string name="cant_make_phone_call_alert_title">Futto can\'t initiate phone calls</string>
+    <string name="cant_make_a_phone_call_permissions_alert">In order for Futto to initiate a phone call, you must go to Settings -> Permissions and grant the Futto app the \'Phone\' permission.\n\nOr, you can open the Phone app and make the phone call yourself.</string>
+
+
+    <!-- API URLs -->
+    <string name="staging_website">https://staging.beiwe.org </string>
+    <string name="production_website">https://studies.beiwe.org </string>
+
+    <string name="data_upload_url">/upload</string>
+    <string name="download_surveys_url">/download_surveys</string>
+    <string name="download_settings_url">/get_study_params</string>
+    <string name="forgot_password_url">/forgot_password</string>
+    <string name="reset_password_url">/set_password</string>
+    <string name="graph_url">/graph</string>
+    <string name="register_url">/register_user</string>
+
+    <!-- Recording Options Strings -->
+    <string name="title_activity_audio_recorder">Make a Voice Recording</string>
+    <string name="button_play">Play Recording</string>
+    <string name="button_record">Record</string>
+
+    <!-- Debug Menu Strings -->
+    <string name="title_activity_debug_interface">Futto debug interface</string>
+    <string name="title_activity_survey">Survey</string>
+
+    <!-- Error Messages -->
+    <string name="question_error_text">If you are reading this, something broke. Please contact the study administrators, and tell them that there is a bug in the survey!</string>
+    <string name="invalid_device">This device does not meet minimum specifications for this app, to avoid any issues resulting from this please uninstall the app.</string>
+    <string name="invalid_encryption_key">Received an invalid encryption key, please contact the a Futto administrator.</string>
+    <string name="http_message_1">Someone misconfigured the server! Please contact research staff.</string>
+    <string name="http_message_400">This device could not be registered under the provided patient ID; please contact research staff.</string>
+    <string name="http_message_403_during_registration">Sorry: either your Study URL, your User ID, or your Temporary Password is incorrect.</string>
+    <string name="http_message_403_wrong_password">Sorry, your Current Password is incorrect.</string>
+    <string name="http_message_403_wrong_password_forgot_password_page">Sorry, your Temporary Password is incorrect.</string>
+    <string name="http_message_405">Sorry, this User ID already has a phone registered. Please contact the research staff and ask them to clear your registration so that you can register this new phone.</string>
+    <string name="http_message_internet_disconnected">It looks like you\'re not connected to the internet- please connect to the internet and try again.</string>
+    <string name="http_message_server_not_found">Are you sure the URL for the study is correct?  Futto can\'t connect to the server.</string>
+    <string name="http_message_unknown_response_code">An unknown error occurred.</string>
+
+    <!-- Survey Activity Strings -->
+    <string name="survey_next_button_text">Next</string>
+    <string name="survey_submit_button">Submit Answers</string>
+    <string name="default_survey_submit_success_message">Thank you for completing the survey.  A clinician will not see your answers immediately, so if you need help or are thinking about harming yourself, please contact your clinician.  You can also press the \"Call My Clinician\" button. </string>
+    <string name="survey_submit_error_message">There has been an error; your answers may not have been recorded and saved</string>
+    <string name="survey_loading_text" tools:ignore="TypographyEllipsis">Downloading the most up-to-date survey questions from the server...</string>
+
+    <!-- Login Activity Strings -->
+    <string name="login_page_for_app">Login page for app</string>
+    <string name="login_activity_please_enter_password">Password:</string>
+    <string name="incorrect_user_pass_combo">Incorrect user-password combination!</string>
+    <string name="title_activity_register">Register</string>
+    <string name="title_activity_login">Log In</string>
+    <string name="title_activity_login_string">Log In</string>
+    <string name="login_activity_welcoming_message">Welcome Back </string>
+    <string name="user_id_system_mismatch">User ID does not match the one in the system. Try again</string>
+    <string name="password_system_mismatch">Incorrect user ID and password combination</string>
+
+    <!-- Reset Password Activity Strings -->
+    <string name="title_activity_reset_password">Change Password</string>
+    <string name="reset_password_title">Change your password</string>
+    <string name="reset_password_current_password_caption">Current password:</string>
+    <string name="reset_password_new_password_caption">New password:</string>
+    <string name="reset_password_confirm_new_password_caption">Confirm new password:</string>
+    <string name="reset_password_submit">Change password</string>
+    <string name="reset_password_error_alert_title">Can\'t change password</string>
+    <string name="invalid_old_password">Old password incorrect</string>
+    <string name="pass_reset_complete">Your password was successfully changed</string>
+    <string name="password_mismatch">New Password doesn\'t match Confirm New Password.</string>
+    <string name="password_too_short">Your new password must be at least %d characters long.</string>
+
+    <!-- Forgot Password Activity Strings -->
+    <string name="title_activity_forgot_password">Forgot Password</string>
+    <string name="forgot_password_title">Call the research assistant to get a temporary password</string>
+    <string name="forgot_password_title_with_id">Call the research assistant to get a temporary password. Your ID is \"%s\".</string>
+    <string name="forgot_password_instructions_text">Your ID is \"%s\"; please identify yourself by that ID and not by your name.</string>
+    <string name="forgot_password_call_button_text">Call research assistant</string>
+    <string name="forgot_password_temporary_password_caption">Temporary password (the one the research assistant gave you)</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <!-- Registration Activity Strings -->
+    <string name="registration_welcome_message">Welcome to Futto</string>
+    <string name="registration_server_url_label">Study server:</string>
+    <string name="registration_server_url_hint">Test Server Url</string>
+    <string name="registration_user_id_label">User ID:</string>
+    <string name="registration_user_id_hint">User ID</string>
+    <string name="registration_temp_password_label">Temporary password:</string>
+    <string name="registration_temp_password_hint">Temp password</string>
+    <string name="registration_new_password_label">New password:</string>
+    <string name="registration_new_password_hint">New password</string>
+    <string name="registration_confirm_new_password_label">Confirm password:</string>
+    <string name="registration_confirm_new_password_hint">Confirm new password</string>
+    <string name="registration_replacement_password_hint">At least %d characters</string>
+    <string name="registration_submit">Register</string>
+    <string name="title_activity_loading">Loading Futto</string>
+    <string name="empty_temp_password">Please enter the Temporary Password you were given at signup.</string>
+    <string name="url_too_short">Please enter the URL for the study.</string>
+    <string name="invalid_user_id">Please enter your User ID.</string>
+    <string name="invalid_password">Invalid password.</string>
+    <string name="couldnt_register">Can\'t register</string>
+
+    <!-- Phone Numbers -->
+    <string name="title_activity_phone_number_entry">Phone Numbers</string>
+    <string name="number_entry_top_message">Phone Numbers</string>
+    <string name="number_entry_button">Set Numbers</string>
+    <string name="phone_number_entry_your_clinician_label">Primary researcher phone:</string>
+    <string name="phone_number_entry_your_clinician_hint">10-digit number</string>
+    <string name="phone_number_entry_research_assistant_label">Research assistant phone:</string>
+    <string name="phone_number_entry_research_assistant_hint">10-digit number</string>
+
+    <!-- Loading Activity Strings -->
+    <string name="loading_activity_loading_message" tools:ignore="TypographyEllipsis">Loading...</string>
+    <string name="survey_notification_title_template">Survey: %1$s</string>
+    <string name="action_share">Share</string>
+    <string name="action_reply">Reply</string>
+
+    <!-- Main menu strings -->
+    <string name="title_activity_main_menu">Futto Main Screen</string>
+    <string name="main_menu_top_message">Welcome to Futto!</string>
+    <string name="main_menu_view_graph">View survey answers on graph</string>
+    <string name="default_call_clinician_text">Call My Clinician</string>
+    <string name="title_activity_graph">Previous Survey Answers</string>
+
+    <!-- Recording Activity -->
+    <string name="record_activity_default_message">We would like to know how your day is going.  When you are ready, please press \"Record\" and speak for about 2 minutes.  Press \"Stop\" when you are finished. The recording will stop automatically after 4 minutes. Remember, researchers will not review and analyze your data until the end of the study, so if you are ill or in danger and need to speak with your clinician, press the \"Call My Clinician\" button.</string>
+    <string name="record_activity_button">Press to record</string>
+    <string name="record_activity_playback">Play recording</string>
+    <string name="play_button_text">Play</string>
+    <string name="play_button_stop_text">Stop</string>
+    <string name="record_button_text">Record</string>
+    <string name="record_button_stop_text">Stop</string>
+    <string name="done_button_text">Save</string>
+    <string name="timeout_msg_1st_half">"The voice recording can't be longer than "</string>
+    <string name="timeout_msg_2nd_half">" minutes, so your recording was automatically stopped and saved"</string>
+
+    <!-- Notifications -->
+    <string name="survey_notification_app_name">Futto</string>
+    <string name="new_android_survey_notification_ticker">New survey</string>
+    <string name="new_android_survey_notification_details">Please fill out this survey.</string>
+    <string name="new_audio_survey_notification_ticker">New voice recording</string>
+    <string name="new_audio_survey_notification_details">Please make a voice recording.</string>
+
+    <!-- Notification Action Pointers -->
+    <string name="start_tracking_survey"> org.beiwe.app.start_android_survey </string>
+    <string name="start_audio_survey"> org.beiwe.app.start_audio_survey </string>
+
+    <!-- Timer Action Strings -->
+    <string name="turn_accelerometer_off">Accelerometer OFF</string>
+    <string name="turn_accelerometer_on">Accelerometer On</string>
+    <string name="turn_bluetooth_off">Bluetooth OFF</string>
+    <string name="turn_bluetooth_on">Bluetooth On</string>
+    <string name="turn_gps_off">GPS OFF</string>
+    <string name="turn_gps_on">GPS On</string>
+    <string name="signout_intent">Signout</string>
+    <string name="voice_recording">Voice Recording</string>
+    <string name="upload_data_files_intent">Upload data files</string>
+    <string name="create_new_data_files_intent">Create new data files</string>
+    <string name="check_for_new_surveys_intent">Check for new surveys</string>
+    <string name="check_for_new_settings_intent">Check for new settings</string>
+    <string name="run_wifi_log">Wifi Log</string>
+
+    <!-- Menu Items -->
+    <string name="menu_sign_out">Sign Out</string>
+    <string name="menu_change_password">Change Password</string>
+    <string name="menu_about">About This App</string>
+    <string name="call_research_assistant">Call Research Assistant</string>
+    <string name="view_survey_answers">View Survey Answers</string>
+
+    <!-- About Page -->
+    <string name="title_activity_about">About Futto</string>
+    <string name="default_about_page_text">Futto is an application that runs on your cell phone and helps researchers collect information about your health and behaviors. It asks you to fill out short surveys, and to make a recording of your voice, once a day. Futto continuously collects information about your location (using your phone\'s GPS) and how much you move around (using your phone\'s accelerometer). It also monitors how much you use your phone for calling and texting, and it keeps track of the different people you communicate with. Importantly, Futto does not record the names or phone numbers of anyone you communicate with. While it can tell if you call the same person more than once, it does not know who that person is. Futto does not record the content of your text messages or phone calls. It also keeps track of the different Wi-Fi networks in your area, but the names of those networks are replaced with random codes. Finally, Futto can tell if you are near another phone that is also running this application.\n\nAlthough Futto collects a large amount of data, all of this data is processed to protect your privacy. This means that the application does not know your name, your phone number, or anything else that could identify you. Futto only knows you by an identification number. Because Futto does not know who you are, it cannot communicate with your clinician if you are ill or in danger. Researchers will not review the data Futto collects until the end of the study. To make it easier for you to connect with your clinician, the \"Call my Clinician\" button appears at the top of every page. In order for the button to work, you must enter your clinician\'s phone number into Futto. You can change it as often as needed.\n\nFutto was conceived and designed by Dr. Jukka-Pekka \"JP\" Onnela at the Harvard School of Public Health. The research study in which you are enrolled is run by Dr. Roy Perlis at Massachusetts General Hospital. The software was built by Zagaran, Inc., in Cambridge, Massachusetts.</string>
+
+    <!-- Phone Numbers -->
+    <string name="phone_number_length_error"> "Phone numbers must be exactly %d digits long." </string>
+    <string name="enter_phone_numbers">You must enter values for the two phone numbers above </string>
+
+    <!-- Consent Form -->
+    <string name="title_activity_consent_form">Consent Form</string>
+    <string name="consentButton">I consent</string>
+    <string name="doNotConsentButton">I do not consent</string>
+    <string name="doNotConsentAlert"> You have indicated you do not consent to the terms of this application.  If you press "I understand" the app will exit, and you will not be enrolled in the study.  If you press "Cancel" the app will not exit and you will be able to press the "I Consent" button, which will then enroll you in the study. </string>
+    <string name="default_consent_form_text">
+        The Consent Form\n
+        Goes\n
+        Here.
+    </string>
+
+    <!-- Survey Settings Keys -->
+    <string name="randomize">randomize</string>
+    <string name="randomizeWithMemory">randomize_with_memory</string>
+    <string name="numberQuestions">number_of_random_questions</string>
+    <string name="triggeredSurvey">trigger_on_first_download</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_directions">DirectionsActivity</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="tab_text_1">Uber</string>
+    <string name="tab_text_2">Transit</string>
+    <string name="tab_text_3">Uber + Transit</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="action_relogin_pass">Enter your password</string>
+    <string name="application_name">Futto</string>
+    <string name="hello">Hello!</string>
+    <string name="username">Username</string>
+    <string name="searchLocation">Search Route</string>
+    <string name="searchJob">Find Job</string>
+    <string name="noti_str">You don\'t have new message now.</string>
+    <string name="futto_sub_menu_str">Welcome Futto Menu</string>
+
+
+</resources>

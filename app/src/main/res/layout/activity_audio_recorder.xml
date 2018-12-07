@@ -1,0 +1,116 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/RelativeLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="0dp"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin" >
+
+        <!-- "Record" and "Play" buttons -->
+	    <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal"
+	        android:padding="0dp"
+	        android:paddingTop="50dp" >
+	
+	        <View
+	            android:layout_width="0dp"
+	            android:layout_height="match_parent"
+	            android:layout_weight="1" />
+	
+	        <Button
+	            android:id="@+id/recording_button"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:background="@android:drawable/btn_default"
+	            android:drawableTop="@drawable/record_button"
+	            android:onClick="buttonRecordPressed"
+	            android:text="@string/record_button_text" />
+	
+	        <View
+	            android:layout_width="0dp"
+	            android:layout_height="match_parent"
+	            android:layout_weight="2" />
+	
+	        <Button
+	            android:id="@+id/play_button"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:background="@android:drawable/btn_default"
+	            android:drawableTop="@drawable/play_button"
+	            android:onClick="buttonPlayPressed"
+	            android:text="@string/play_button_text" />
+	
+	        <View
+	            android:layout_width="0dp"
+	            android:layout_height="match_parent"
+	            android:layout_weight="1" />
+	    </LinearLayout>
+
+        <!-- "Done" and "Call My Clinician" buttons -->
+	    <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal"
+	        android:padding="0dp"
+	        android:paddingTop="200dp" >
+	
+	        <View
+	            android:layout_width="0dp"
+	            android:layout_height="match_parent"
+	            android:layout_weight="1" />
+	
+	        <Button
+	            android:id="@+id/done_button"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:background="@android:drawable/btn_default"
+	            android:onClick="buttonSavePressed"
+	            android:text="@string/done_button_text" />
+	
+	        <View
+	            android:layout_width="0dp"
+	            android:layout_height="match_parent"
+	            android:layout_weight="2" />
+	
+	        <Button
+	            android:id="@+id/record_activity_call_clinician"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:background="@android:drawable/btn_default"
+	            android:onClick="callClinician"
+	            android:text="@string/default_call_clinician_text" />
+	
+		    <View
+		        android:layout_width="0dp"
+		        android:layout_height="match_parent"
+		        android:layout_weight="1" />
+	    </LinearLayout>
+    
+	    <!-- Scroll view containing the voice recording text -->
+	    <ScrollView
+	        android:id="@+id/audioRecorderPageScrollView"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        tools:ignore="UselessParent" >
+	
+            <org.futto.app.survey.MarkDownTextView
+                android:id="@+id/record_activity_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/record_activity_default_message"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+	    </ScrollView>
+
+    </LinearLayout>
+    
+</RelativeLayout>
