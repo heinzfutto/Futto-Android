@@ -68,7 +68,7 @@ public class FuttoFirebaseInstanceIdService extends FirebaseInstanceIdService {
         // Add custom implementation, as needed.
         //Enviar para servidor
         Log.d(LOG_TAG, token); //NOT PRINT
-
+        System.out.println("token: "+token);
         HttpURLConnection connection;
 
         URL url = null;
@@ -77,7 +77,8 @@ public class FuttoFirebaseInstanceIdService extends FirebaseInstanceIdService {
         }
         //Send the FCM token to the server
         try {
-            String adress = "http://futtonotification.us-east-1.elasticbeanstalk.com/FCM_RECIEVER/register&" + token + "&" + username;
+//            String adress = "http://futtonotification.us-east-1.elasticbeanstalk.com/FCM_RECIEVER/register&" + token + "&" + username;
+            String adress = "http://sendfuttonote.us-east-2.elasticbeanstalk.com/FCM_RECIEVER/register&" + token + "&" + username;
             url = new URL(adress);
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");

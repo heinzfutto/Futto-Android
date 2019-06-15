@@ -71,7 +71,7 @@ public class TransitManager {
 //        adapter.notifyDataSetChanged();
     }
 
-    private List<Stop> parseStops(JSONObject response, Step transit, TransitManagerListener listener) {
+    private List<Stop>  parseStops(JSONObject response, Step transit, TransitManagerListener listener) {
         try {
             JSONArray stopsList = response.getJSONObject("bustime-response").getJSONArray("stops");
             List<Stop> transitStops = new ArrayList<Stop>();
@@ -113,8 +113,7 @@ public class TransitManager {
         return distance[0];
     }
 
-    /**Implements the server request logic for user, device registration.
-     * @param url the URL for device registration*/
+
     private void tryToGetTransitWithTheServer(final String url, LatLng start, LatLng end, Date departureTime, TransitManagerListener listener, String mode) {
 
         new HTTPUIAsync(url, fragment.getActivity()) {
@@ -128,6 +127,7 @@ public class TransitManager {
                         GetRequest.makeParameter("departure_time", departureTime.getTime() / 1000l + "") +
                         GetRequest.makeParameter("mode", mode);
                 response = GetRequest.httpGetResponse(parameters, url, new ArrayList<String>());
+                System.out.println(response);
                 return null;
             }
 

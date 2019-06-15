@@ -14,7 +14,7 @@
 
     <string name="power_management_exception_alert"> This permission prompt you are about to see is required to allow Futto to execute in the background. </string>
     <string name="cant_make_phone_call_alert_title">Futto can\'t initiate phone calls</string>
-    <string name="cant_make_a_phone_call_permissions_alert">In order for Futto to initiate a phone call, you must go to Settings -> Permissions and grant the Futto app the \'Phone\' permission.\n\nOr, you can open the Phone app and make the phone call yourself.</string>
+    <string name="cant_make_a_phone_call_permissions_alert">In order for Futto to initiate a phone call, you must go to Settings -> Permissions and grant the Futto app the \'Phone\' permission.\n\nOr, you can open the Phone app and make the phone call 412-228-0564 yourself.</string>
 
 
     <!-- API URLs -->
@@ -28,7 +28,7 @@
     <string name="reset_password_url">/set_password</string>
     <string name="graph_url">/graph</string>
     <string name="register_url">/register_user</string>
-
+    <string name="login_url">/authorization_user</string>
     <!-- Recording Options Strings -->
     <string name="title_activity_audio_recorder">Make a Voice Recording</string>
     <string name="button_play">Play Recording</string>

@@ -193,7 +193,7 @@ public class TransitFragment extends Fragment implements OnMapReadyCallback {
         mMap.setMaxZoomPreference(20);
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(new LatLng(source.latitude, source.longitude))
-                .zoom(17)
+                .zoom(12)
                 .build();
         mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }

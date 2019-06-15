@@ -62,7 +62,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         LayoutInflater inflater = LayoutInflater.from(context);
 
         // Inflate the custom layout
-        View contactView = inflater.inflate(R.layout.noti_item, parent, false);
+        View contactView = inflater.inflate(R.layout.notification_item, parent, false);
 
         // Return a new holder instance
         ViewHolder viewHolder = new ViewHolder(contactView);
@@ -106,7 +106,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         // for any view that will be set as you render a row
         public TextView titleTextView;
         public TextView contentTextView;
-        public ImageView couponPic;
+//        public ImageView couponPic;
         public TextView dateTextView;
 
         // We also create a constructor that accepts the entire item row
@@ -119,7 +119,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             titleTextView = (TextView) itemView.findViewById(R.id.titleText);
             contentTextView= (TextView) itemView.findViewById(R.id.contentText);
 //            ratingText = (TextView) itemView.findViewById(R.id.ratingText);
-            couponPic = (ImageView)itemView.findViewById(R.id.couponPic);
+//            couponPic = (ImageView)itemView.findViewById(R.id.couponPic);
             dateTextView =  (TextView) itemView.findViewById(R.id.pubDateText);
 
             itemView.setOnClickListener(new View.OnClickListener() {

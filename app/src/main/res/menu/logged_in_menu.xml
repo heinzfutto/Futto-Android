@@ -4,8 +4,8 @@
           android:title="@string/menu_about" />
     <item android:id="@+id/menu_change_password"
           android:title="@string/menu_change_password" />
-    <item android:id="@+id/view_survey_answers"
-          android:title="@string/view_survey_answers" />
+    <!--<item android:id="@+id/view_survey_answers"-->
+          <!--android:title="@string/view_survey_answers" />-->
     <item android:id="@+id/menu_signout"
           android:title="@string/menu_sign_out" />
 </menu>

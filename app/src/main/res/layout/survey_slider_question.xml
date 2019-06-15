@@ -4,16 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:tag="sliderQuestion"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
 	<org.futto.app.survey.MarkDownTextView
-	    android:id="@+id/questionText"
-	    android:layout_width="match_parent"
-	    android:layout_height="match_parent"
-	    style="@style/MainTextStyle"
-	    android:padding="20dp"
-	    android:textSize="20sp"
-	    android:text="@string/question_error_text" >
+		android:gravity="center"
+		android:id="@+id/questionText"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		style="@style/MainTextStyle"
+		android:padding="20dp"
+		android:textSize="24sp"
+		android:textStyle="bold"
+		android:layout_marginTop="30dp"
+		android:text="Slider Button" >
 	</org.futto.app.survey.MarkDownTextView>
 
 	<View
@@ -30,7 +33,9 @@
         android:paddingRight="50dp"
         android:paddingTop="10dp"
         android:paddingBottom="50dp"
-        android:progress="2" >
+        android:progress="2"
+		android:minHeight="10dp"
+		android:progressBackgroundTint="@color/colorPrimary">
     </org.futto.app.survey.SeekBarEditableThumb>
 
 </LinearLayout>

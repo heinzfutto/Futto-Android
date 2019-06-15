@@ -190,10 +190,9 @@ public abstract class BaseMapsActivity extends SessionActivity implements OnMapR
                 Status status = PlaceAutocomplete.getStatus(this, data);
                 Toast.makeText(this, "Error " + status, Toast.LENGTH_SHORT).show();
 
-
             } else if (resultCode == RESULT_CANCELED) {
                 // The user canceled the operation.
-                setUpPolyLine(null);
+//                setUpPolyLine(null);
             }
         }
     }

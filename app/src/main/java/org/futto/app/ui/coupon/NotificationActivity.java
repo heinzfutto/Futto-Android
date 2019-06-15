@@ -47,7 +47,7 @@ public class NotificationActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
         toolbar.setTitleTextColor(Color.WHITE);
-        getSupportActionBar().setTitle("Futto Coupons");
+        getSupportActionBar().setTitle("Notification Center");
     }
     public void NotificationReady(final PaginatedList<NotificationDO> notis) {
         if (notis != null) {
@@ -65,7 +65,9 @@ public class NotificationActivity extends AppCompatActivity {
                 public void onItemClick(View view, int position) {
                     String name = notis.get(position).getTitle();
                     Toast.makeText(NotificationActivity.this, name + " was clicked!", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(NotificationActivity.this, BarcodeActivity.class);
+                    Intent intent = new Intent(NotificationActivity.this, FullTextActivity.class);
+                    intent.putExtra("title", notis.get(position).getTitle());
+                    intent.putExtra("content",notis.get(position).getContent());
                     startActivity(intent);
                 }
             });

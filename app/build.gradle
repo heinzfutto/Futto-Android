@@ -7,14 +7,14 @@ keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 android {
     signingConfigs {
         config {
-            storeFile file('/Users/hantsechiou/ridesharing-android/keystore')
+            storeFile file('/Users/luoxuechun/Documents/GitHub/Futto-Android/keystore')
             keyAlias 'alias'
             keyPassword '170191sen'
             storePassword '170191sen'
         }
     }
     compileSdkVersion 27
-    buildToolsVersion '27.0.3'
+    buildToolsVersion '28.0.3'
     defaultConfig {
         vectorDrawables.useSupportLibrary = true
         applicationId "org.futto.app"

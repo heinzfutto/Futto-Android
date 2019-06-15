@@ -10,6 +10,8 @@
     tools:context="org.futto.app.ui.registration.ConsentFormActivity" >
 
     <TextView
+        android:layout_marginTop="20dp"
+        android:padding="10dp"
         android:id="@+id/consent_form_body"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -19,12 +21,21 @@
         android:id="@+id/consentButton"
         style="@style/RegistrationSubmitButton"
         android:onClick="consentButton"
-        android:text="@string/consentButton" />
+        android:text="@string/consentButton"
+        android:padding="10dp"
+        android:background="@drawable/shape_button"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"/>
 
     <Button
+        android:layout_marginTop="20dp"
         android:id="@+id/doNotConsentButton"
         style="@style/RegistrationSubmitButton"
         android:onClick="doNotConsentButton"
-        android:text="@string/doNotConsentButton" />
+        android:text="@string/doNotConsentButton"
+        android:padding="10dp"
+        android:background="@drawable/shape_button"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"/>
 
 </LinearLayout>

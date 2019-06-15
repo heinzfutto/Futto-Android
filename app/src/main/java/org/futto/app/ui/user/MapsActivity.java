@@ -42,8 +42,8 @@ public class MapsActivity extends BaseMapsActivity {
     @BindView(R.id.tvWhereTo)
     TextView tvWhereto;
 
-    @BindView(R.id.ivMenu)
-    ImageView menu;
+//    @BindView(R.id.ivMenu)
+//    ImageView menu;
 
     public static LatLng from;
     public static LatLng to;
@@ -56,8 +56,6 @@ public class MapsActivity extends BaseMapsActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         ButterKnife.bind(this);
-
-
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(MapsActivity.this);
@@ -74,32 +72,31 @@ public class MapsActivity extends BaseMapsActivity {
         startActivity(i);
     }
 
-    @OnClick(R.id.ivMenu)
-    void showMenu() {
-
-        PopupMenu popupMenu = new PopupMenu(this, findViewById(R.id.ivMenu));
-        popupMenu.getMenu().add(1, R.id.menu_about,3, R.string.menu_about);
-        popupMenu.getMenu().add(1, R.id.menu_change_password, 4, R.string.menu_change_password);
-        popupMenu.getMenu().add(1, R.id.view_survey_answers,5, R.string.view_survey_answers);
-        popupMenu.getMenu().add(1, R.id.menu_signout,6, R.string.menu_sign_out);
-
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                return MapsActivity.super.onOptionsItemSelected(item);
-            }
-        });
-
-        popupMenu.show();
-
-    }
+//    @OnClick(R.id.ivMenu)
+//    void showMenu() {
+//
+//        PopupMenu popupMenu = new PopupMenu(this, findViewById(R.id.ivMenu));
+//        popupMenu.getMenu().add(1, R.id.menu_about,3, R.string.menu_about);
+//        popupMenu.getMenu().add(1, R.id.menu_change_password, 4, R.string.menu_change_password);
+//        popupMenu.getMenu().add(1, R.id.view_survey_answers,5, R.string.view_survey_answers);
+//        popupMenu.getMenu().add(1, R.id.menu_signout,6, R.string.menu_sign_out);
+//
+//        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+//
+//            @Override
+//            public boolean onMenuItemClick(MenuItem item) {
+//                return MapsActivity.super.onOptionsItemSelected(item);
+//            }
+//        });
+//
+//        popupMenu.show();
+//
+//    }
 
     @OnClick(R.id.rlwhere)
     void openPlacesView() {
         openPlaceAutoCompleteView();
     }
-
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -117,6 +114,7 @@ public class MapsActivity extends BaseMapsActivity {
         }
         ivHome.setVisibility(View.VISIBLE);
         LatLng source = new LatLng(getUserLocation().getLatitude(), getUserLocation().getLongitude());
+
         LatLng destination = getDestinationLatLong();
         addMarker(destination);
         addMarker(source);

@@ -17,6 +17,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
 import org.futto.app.session.SessionActivity;
+import org.futto.app.storage.EncryptionEngine;
+import org.futto.app.storage.PersistentData;
 
 import java.io.IOException;
 
@@ -31,7 +33,16 @@ public class JobsActivity extends SessionActivity {
 //        sendSession();
         getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         mWebView = new WebView(this);
-        mWebView.loadUrl("http://www.findyourdreamjob.org/");
+        String url = "http://www.findyourdreamjob.org/Home.aspx?sessionID="+
+                PersistentData.getPassword()+EncryptionEngine.safeHash(PersistentData.getPatientID());
+        mWebView.loadUrl(url);
+//        System.out.println(url);
+//        System.out.println(PersistentData.getPassword());
+//        System.out.println(EncryptionEngine.safeHash(PersistentData.getPassword()));
+//        System.out.println(PersistentData.getPatientID());
+//        System.out.println(EncryptionEngine.safeHash(PersistentData.getPatientID()));
+//        mWebView.loadUrl("http://www.findyourdreamjob.org/");
+//        http://www.findyourdreamjob.org/Home.aspx?sessionID=jZae727K08KaOmKSgOaGzww_XVqGr_PKEgIMkjrcbJI=5tiY8qfXWFnatDwNH9SzXgAlVDktfb5hvqswLVJh7s0=
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {

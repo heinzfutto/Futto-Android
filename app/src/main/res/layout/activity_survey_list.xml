@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#65c0ba">
+
+    <include
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Active Surveys:"
+        android:textSize="22dp"
+        android:layout_marginLeft="20dp"
+        android:textColor="@color/black"/>
+    <ListView
+        android:layout_marginTop="15dp"
+        android:layout_height = "360dp"
+        android:layout_width="match_parent"
+        android:id="@+id/surveylistView"
+        android:layout_gravity="center_horizontal" />
+    <Button
+        android:layout_marginTop="20dp"
+        android:text="Call Researcher"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:background="@drawable/rounded_btn"
+        style="@style/RegistrationSubmitButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:onClick="callClinician"/>
+
+</LinearLayout>
