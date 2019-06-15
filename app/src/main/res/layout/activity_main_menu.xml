@@ -167,7 +167,7 @@
                     android:layout_margin="1dp"
                     android:layout_weight="1"
                     android:baselineAligned="false"
-                    android:onClick="featureIsNotAvailable"
+                    android:onClick="survey"
                     android:orientation="vertical"
                     android:src="@drawable/new_suvey"></ImageButton>
 
@@ -178,9 +178,9 @@
                     android:layout_margin="1dp"
                     android:layout_weight="1"
                     android:baselineAligned="false"
-                    android:onClick="notification"
+                    android:onClick="aboutme"
                     android:orientation="vertical"
-                    android:src="@drawable/coupon"></ImageButton>
+                    android:src="@drawable/aboutfutto"></ImageButton>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

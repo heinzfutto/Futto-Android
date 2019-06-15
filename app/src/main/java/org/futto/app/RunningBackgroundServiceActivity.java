@@ -11,11 +11,14 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -39,13 +42,21 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.muddzdev.styleabletoastlibrary.StyleableToast;
 
 import org.futto.app.BackgroundService.BackgroundServiceBinder;
+import org.futto.app.networking.HTTPUIAsync;
 import org.futto.app.networking.NetworkUtility;
+import org.futto.app.networking.PostRequest;
 import org.futto.app.nosql.NotificationDO;
+import org.futto.app.storage.EncryptionEngine;
 import org.futto.app.storage.PersistentData;
+import org.futto.app.survey.SurveyActivity;
+import org.futto.app.survey.SurveyListActivity;
 import org.futto.app.ui.coupon.NotificationActivity;
+import org.futto.app.ui.user.AboutActivityLoggedIn;
 import org.futto.app.ui.user.AboutActivityLoggedOut;
 import org.futto.app.ui.user.JobsActivity;
 import org.futto.app.ui.user.MapsActivity;
+
+import static org.futto.app.networking.PostRequest.addWebsitePrefix;
 
 /**
  * All Activities in the app extend this Activity.  It ensures that the app's key services (i.e.
@@ -255,7 +266,8 @@ public class RunningBackgroundServiceActivity extends AppCompatActivity {
      */
     @SuppressWarnings("MissingPermission")
     public void callClinician(View v) {
-        startPhoneCall(PersistentData.getPrimaryCareNumber());
+//        startPhoneCall(PersistentData.getPrimaryCareNumber());
+        startPhoneCall("4122280564");
     }
 
     /**
@@ -268,10 +280,22 @@ public class RunningBackgroundServiceActivity extends AppCompatActivity {
         else NetWorkIsNotAvailable(v);
     }
 
+    public void survey(View v) {
+        Intent i = new Intent(this, SurveyListActivity.class);
+//        Intent i = new Intent(this, SurveyActivity.class);
+        if(NetworkUtility.networkIsAvailable(this))startActivity(i);
+        else NetWorkIsNotAvailable(v);
+    }
+
     public void notification(View v) {
         Intent i = new Intent(this, NotificationActivity.class);
         if(NetworkUtility.networkIsAvailable(this))startActivity(i);
         else NetWorkIsNotAvailable(v);
+    }
+
+    public void aboutme(View v){
+        Intent i = new Intent(this, AboutActivityLoggedIn.class);
+        startActivity(i);
     }
 
     public void NetWorkIsNotAvailable(View v) {
@@ -281,6 +305,7 @@ public class RunningBackgroundServiceActivity extends AppCompatActivity {
     public void featureIsNotAvailable(View v) {
         StyleableToast.makeText(this, "Sorry, this feature is temporary unavailable", R.style.mytoast).show();
     }
+
 
     public void web(View v) {
         Intent i = new Intent(this, JobsActivity.class);
@@ -294,13 +319,14 @@ public class RunningBackgroundServiceActivity extends AppCompatActivity {
     public void callResearchAssistant(View v) {
         startPhoneCall(PersistentData.getPasswordResetNumber());
     }
-
+    @SuppressWarnings("MissingPermission")
     private void startPhoneCall(String phoneNumber) {
         Intent callIntent = new Intent(Intent.ACTION_CALL);
         callIntent.setData(Uri.parse("tel:" + phoneNumber));
-        try {
+        try{
             startActivity(callIntent);
         } catch (SecurityException e) {
+            e.printStackTrace();
             showAlertThatEnablesUserToGrantPermission(this,
                     getString(R.string.cant_make_a_phone_call_permissions_alert),
                     getString(R.string.cant_make_phone_call_alert_title),

@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <org.futto.app.survey.MarkDownTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:gravity="center"
+    android:id="@+id/questionText"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     style="@style/MainTextStyle"
     android:padding="20dp"
-    android:textSize="20sp"
-    android:tag="infoTextbox"
-    android:text="@string/question_error_text" >
+    android:textSize="24sp"
+    android:textStyle="bold"
+    android:layout_marginTop="50dp"
+    android:text="@string/question_error_text"
+    android:tag="infoTextbox">
 </org.futto.app.survey.MarkDownTextView>

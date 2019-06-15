@@ -2,10 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.futto.app">
 
-    <uses-sdk
-        android:minSdkVersion="16"
-        android:targetSdkVersion="23" />
-
     <!-- GPS and network-location service -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -25,6 +21,8 @@
     <!-- get own phone number -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
+    <!--call phone -->
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
     <!-- Permission used in android 6+ for being whitelisted for app standby -->
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
     <!-- as of the android 6 compatibility update, Beiwe no longer supports installation onto external media -->
@@ -75,6 +73,8 @@
             android:name=".survey.SurveyActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_survey" />
+        <activity android:name=".survey.SurveyListActivity"
+            android:label="Survey"/>
         <activity
             android:name=".ui.DebugInterfaceActivity"
             android:label="@string/title_activity_debug_interface" />
@@ -93,6 +93,7 @@
         <activity
             android:name=".ui.user.GraphActivity"
             android:label="@string/title_activity_graph" />
+
 
         <!-- SERVICE -->
 
@@ -168,6 +169,7 @@
         <activity android:name=".ui.user.JobsActivity" />
         <activity android:name=".ui.coupon.NotificationActivity"></activity>
         <activity android:name=".ui.coupon.BarcodeActivity"></activity>
+        <activity android:name=".ui.coupon.FullTextActivity"></activity>
     </application>
 
 </manifest>

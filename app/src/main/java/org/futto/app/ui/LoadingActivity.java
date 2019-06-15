@@ -15,6 +15,7 @@ import org.futto.app.RunningBackgroundServiceActivity;
 import org.futto.app.storage.EncryptionEngine;
 import org.futto.app.storage.PersistentData;
 import org.futto.app.ui.registration.RegisterActivity;
+import org.futto.app.ui.user.LoginActivity;
 import org.futto.app.ui.user.MainMenuActivity;
 import org.futto.app.ui.utils.AlertsManager;
 
@@ -92,10 +93,26 @@ public class LoadingActivity extends RunningBackgroundServiceActivity {
 	}
 
 
+//	/**CHecks whether device is registered, sends user to the correct screen. */
+//	private void loadingSequence() {
+//		//if the device is not registered, push the user to the register activity
+//		if ( !PersistentData.isRegistered() ){ startActivity(new Intent(this, RegisterActivity.class) ); }
+//		//if device is registered push user to the main menu.
+//		else {
+//			if (BuildConfig.APP_IS_BETA) {
+//				startActivity(new Intent(this, DebugInterfaceActivity.class));
+//			} else {
+//				startActivity(new Intent(this, MainMenuActivity.class));
+//			}
+//		}
+//		unbindService(backgroundServiceConnection);
+//		finish(); //destroy the loading screen
+//	}
+
 	/**CHecks whether device is registered, sends user to the correct screen. */
 	private void loadingSequence() {
 		//if the device is not registered, push the user to the register activity
-		if ( !PersistentData.isRegistered() ){ startActivity(new Intent(this, RegisterActivity.class) ); }
+		if ( !PersistentData.isRegistered() ){ startActivity(new Intent(this, LoginActivity.class) ); }
 		//if device is registered push user to the main menu.
 		else {
 			if (BuildConfig.APP_IS_BETA) {
@@ -107,7 +124,6 @@ public class LoadingActivity extends RunningBackgroundServiceActivity {
 		unbindService(backgroundServiceConnection);
 		finish(); //destroy the loading screen
 	}
-
 
 	/*##################################################################################
 	############################### Testing Function ###################################

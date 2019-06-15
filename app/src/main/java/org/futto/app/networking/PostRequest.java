@@ -1,6 +1,7 @@
 package org.futto.app.networking;
 
 import android.content.Context;
+import android.icu.text.IDNA;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -67,6 +68,38 @@ public class PostRequest {
 			return 502; }
 	}
 
+	/**For use with Async tasks.
+	 * This opens a connection with the server, sends the HTTP parameters, then receives a response code, and returns it.
+	 * @param parameters HTTP parameters
+	 * @return serverResponseCode */
+	public static int httpLogin( String parameters, String url ) {
+		try {
+			return doLoginRequest( parameters, new URL(url) ); }
+		catch (MalformedURLException e) {
+			Log.e("PostRequestFileUpload", "malformed URL");
+			e.printStackTrace();
+			return 0; }
+		catch (IOException e) {
+			e.printStackTrace();
+			Log.e("PostRequest","Network error: " + e.getMessage());
+			return 502; }
+	}
+
+	/**For use with Async tasks.
+	 * Makes an HTTP post request with the provided URL and parameters, returns the server's response code from that request
+	 * @param parameters HTTP parameters
+	 * @return an int of the server's response code from the HTTP request */
+	public static int httpRequestcode2( String patient_id,String parameters, String url, String newPassword ) {
+		try {
+			return doPostRequestGetResponseCode2(patient_id,parameters, new URL(url), newPassword ); }
+		catch (MalformedURLException e) {
+			Log.e("PosteRequestFileUpload", "malformed URL");
+			e.printStackTrace();
+			return 0; }
+		catch (IOException e) {
+			Log.e("PostRequest","Unable to establish network connection");
+			return 502; }
+	}
 
 	/**For use with Async tasks.
 	 * Makes an HTTP post request with the provided URL and parameters, returns the server's response code from that request
@@ -182,6 +215,22 @@ public class PostRequest {
 	 * @param parameters a string that has been created using the makeParameters function
 	 * @param url a URL object
 	 * @return a new HttpsURLConnection with common settings */
+	private static HttpsURLConnection setupHTTP2( String patient_id,String parameters, URL url, String newPassword ) throws IOException {
+		HttpsURLConnection connection = minimalHTTP(url);
+
+		DataOutputStream request = new DataOutputStream( connection.getOutputStream() );
+		request.write( securityParameters2(newPassword,patient_id).getBytes() );
+		request.write( parameters.getBytes() );
+		request.flush();
+		request.close();
+
+		return connection;
+	}
+
+	/**For use with functionality that requires additional parameters be added to an HTTP operation.
+	 * @param parameters a string that has been created using the makeParameters function
+	 * @param url a URL object
+	 * @return a new HttpsURLConnection with common settings */
 	private static HttpsURLConnection setupHTTP( String parameters, URL url, String newPassword, List<String> headers) throws IOException {
 		HttpsURLConnection connection = minimalHTTP(url, headers);
 
@@ -239,6 +288,13 @@ public class PostRequest {
 		return response;
 	}
 
+	private static int doPostRequestGetResponseCode2(String patient_id,String parameters, URL url, String newPassword) throws IOException {
+		HttpsURLConnection connection = setupHTTP2(patient_id,parameters, url, newPassword);
+		int response = connection.getResponseCode();
+		connection.disconnect();
+		return response;
+	}
+
 
 	private static int doRegisterRequest(String parameters, URL url) throws IOException {
 		HttpsURLConnection connection = setupHTTP(parameters, url, null);
@@ -253,6 +309,41 @@ public class PostRequest {
 				SetDeviceSettings.writeDeviceSettings(deviceSettings);
 			} catch (JSONException e) { CrashHandler.writeCrashlog(e, appContext); }
 		}
+		connection.disconnect();
+		return response;
+	}
+
+	private static int doLoginRequest(String parameters, URL url) throws IOException {
+		HttpsURLConnection connection = setupHTTP(parameters, url, null);
+		int response = connection.getResponseCode();
+		if (response == 401 || response == 402 || response == 403||response == 404||response == 405){
+			String responseBody = readResponse(connection);
+			try {
+				JSONObject responseJSON = new JSONObject(responseBody);
+			}catch (Exception e){
+
+			}
+		}else{
+			String responseBody = readResponse(connection);
+			try {
+				JSONObject responseJSON = new JSONObject(responseBody);
+				String key = responseJSON.getString("status");
+//				Log.e(, "doLoginRequest: ",key );
+//				writeKey(key, response);
+//				JSONObject deviceSettings = responseJSON.getJSONObject("device_settings");
+//				SetDeviceSettings.writeDeviceSettings(deviceSettings);
+			} catch (JSONException e) { CrashHandler.writeCrashlog(e, appContext); }
+		}
+//		if ( response == 200 ) {
+//			String responseBody = readResponse(connection);
+//			try {
+//				JSONObject responseJSON = new JSONObject(responseBody);
+//				String key = responseJSON.getString("client_public_key");
+//				writeKey(key, response);
+//				JSONObject deviceSettings = responseJSON.getJSONObject("device_settings");
+//				SetDeviceSettings.writeDeviceSettings(deviceSettings);
+//			} catch (JSONException e) { CrashHandler.writeCrashlog(e, appContext); }
+//		}
 		connection.disconnect();
 		return response;
 	}
@@ -389,6 +480,21 @@ public class PostRequest {
 	 *  @return a String of the securityParameters to append to the POST request */
 	public static String securityParameters(String newPassword) {
 		String patientId = PersistentData.getPatientID();
+		String deviceId = DeviceInfo.getAndroidID();
+		String password = PersistentData.getPassword();
+		if (newPassword != null) password = newPassword;
+
+		return makeParameter("patient_id", patientId) +
+				makeParameter("password", password) +
+				makeParameter("device_id", deviceId);
+	}
+
+	/** Create the 3 standard security parameters for POST request authentication.
+	 *  @param newPassword If this is a Forgot Password request, pass in a newPassword string from
+	 *  a text input field instead of from the device storage.
+	 *  @return a String of the securityParameters to append to the POST request */
+	public static String securityParameters2(String newPassword,String patient_id) {
+		String patientId = patient_id;
 		String deviceId = DeviceInfo.getAndroidID();
 		String password = PersistentData.getPassword();
 		if (newPassword != null) password = newPassword;

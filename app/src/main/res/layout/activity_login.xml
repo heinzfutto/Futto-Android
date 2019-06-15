@@ -14,7 +14,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:background="@android:color/transparent" />
 
 
@@ -49,17 +49,38 @@
 
         <View
             android:layout_width="wrap_content"
-            android:layout_height="80dp"
+            android:layout_height="40dp"
             android:background="@android:color/transparent" />
+
+        <EditText
+            android:id="@+id/usernameText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:height="120dp"
+            android:autofillHints="@font/roboto_bold"
+            android:background="@drawable/rounded_corner"
+            android:fontFamily="@font/roboto_medium"
+            android:hint="Enter your User ID"
+            android:inputType="textPersonName"
+            android:padding="16dp"
+            android:textColor="#ffffff"
+            android:textScaleX="1.2">
+                <requestFocus />
+        </EditText>
+
 
         <EditText
             android:id="@+id/editText2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:height="120dp"
+            android:layout_marginTop="20dp"
             android:autofillHints="@font/roboto_bold"
             android:background="@drawable/rounded_corner"
             android:fontFamily="@font/roboto_medium"
@@ -102,6 +123,17 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:onClick="forgotPassword"
+            android:textSize="16dp"
             android:text="@string/title_activity_forgot_password" />
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:id="@+id/register_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:onClick="register"
+            android:textSize="16dp"
+            android:text="Don't have an account? Register Now" />
 
 </LinearLayout>

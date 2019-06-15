@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.DrawableRes;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -300,7 +301,6 @@ public class QuestionFragment extends Fragment {
 
                 // Inflate the checkbox from an XML layout file
                 CheckBox checkbox = (CheckBox) inflater.inflate(R.layout.survey_checkbox, null);
-
                 // Set the text if it's provided; otherwise leave text as default error message
                 if (options[i] != null) {
                     checkbox.setText(options[i]);

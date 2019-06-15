@@ -2,7 +2,9 @@ package org.futto.app.survey;
 
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -37,12 +39,6 @@ public class SurveyActivity extends SessionActivity implements
 		setContentView(R.layout.activity_survey);
 		Intent triggerIntent = getIntent();
 		surveyId = triggerIntent.getStringExtra("surveyId");
-//		if (savedInstanceState == null) {
-//			Bundle extras = getIntent().getExtras();
-//			if (extras != null) {
-//				answers = new ArrayList<>();
-//			}
-//		}
 	}
 
 
@@ -68,11 +64,16 @@ public class SurveyActivity extends SessionActivity implements
 		if (dataFromOldQuestion != null) {
 			surveySkipLogic.setAnswer(dataFromOldQuestion);
 		}
-
-	    JSONObject nextQuestion = surveySkipLogic.getNextQuestion();
-        // If you've run out of questions, display the Submit button
-        if (nextQuestion == null) { displaySurveySubmitFragment(); }
-        else { displaySurveyQuestionFragment(nextQuestion, surveySkipLogic.onFirstQuestion()); }
+		JSONObject nextQuestion = null;
+        if(surveySkipLogic!=null) {
+			nextQuestion = surveySkipLogic.getNextQuestion();
+			// If you've run out of questions, display the Submit button
+			if (nextQuestion == null) {
+				displaySurveySubmitFragment();
+			} else {
+				displaySurveyQuestionFragment(nextQuestion, surveySkipLogic.onFirstQuestion());
+			}
+		}
     }
 
 
@@ -114,6 +115,7 @@ public class SurveyActivity extends SessionActivity implements
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
+
 
 
 	private void setUpQuestions(String surveyId) {

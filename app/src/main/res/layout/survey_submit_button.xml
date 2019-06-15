@@ -4,7 +4,8 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="25dp" >
+    android:paddingTop="25dp"
+    android:layout_marginTop="60dp">
 
     <View
         android:layout_width="0dp"
@@ -12,11 +13,15 @@
         android:layout_weight="1" />
 
     <Button
+        android:layout_gravity="center"
         android:id="@+id/buttonSubmit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@android:drawable/btn_default"
-        android:text="@string/survey_submit_button" />
+        android:background="@drawable/shape_button"
+        android:text="@string/survey_submit_button"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        android:padding="20dp"/>
 
     <View
         android:layout_width="0dp"

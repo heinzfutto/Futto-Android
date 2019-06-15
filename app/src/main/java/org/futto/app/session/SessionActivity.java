@@ -103,8 +103,8 @@ public class SessionActivity extends RunningBackgroundServiceActivity {
 		case R.id.menu_about:
 			startActivity(new Intent(getApplicationContext(), AboutActivityLoggedIn.class));
 			return true;
-		case R.id.view_survey_answers:
-			startActivity(new Intent(getApplicationContext(), GraphActivity.class));
+//		case R.id.view_survey_answers:
+//			startActivity(new Intent(getApplicationContext(), GraphActivity.class));
 		default:
 			return super.onOptionsItemSelected(item);
 		}

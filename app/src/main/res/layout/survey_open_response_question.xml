@@ -7,13 +7,16 @@
     android:orientation="vertical" >
 
 	<org.futto.app.survey.MarkDownTextView
-	    android:id="@+id/questionText"
-	    android:layout_width="match_parent"
-	    android:layout_height="match_parent"
-	    style="@style/MainTextStyle"
-	    android:padding="20dp"
-	    android:textSize="20sp"
-	    android:text="@string/question_error_text" >
+		android:gravity="center"
+		android:id="@+id/questionText"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		style="@style/MainTextStyle"
+		android:padding="20dp"
+		android:textSize="24sp"
+		android:textStyle="bold"
+		android:layout_marginTop="30dp"
+		android:text="Free Response" >
 	</org.futto.app.survey.MarkDownTextView>
 
 	<LinearLayout
