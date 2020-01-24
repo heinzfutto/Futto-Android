@@ -341,18 +341,22 @@ public class QuestionFragment extends Fragment {
         switch (inputTextType) {
             case NUMERIC:
                 editText = (EditText) inflater.inflate(R.layout.survey_free_number_input, null);
+                editText.setSelectAllOnFocus(true);
                 break;
 
             case SINGLE_LINE_TEXT:
                 editText = (EditText) inflater.inflate(R.layout.survey_free_text_input, null);
+                editText.setSelectAllOnFocus(true);
                 break;
 
             case MULTI_LINE_TEXT:
                 editText = (EditText) inflater.inflate(R.layout.survey_multiline_text_input, null);
+                editText.setSelectAllOnFocus(true);
                 break;
 
             default:
                 editText = (EditText) inflater.inflate(R.layout.survey_free_text_input, null);
+                editText.setSelectAllOnFocus(true);
                 break;
         }
 
@@ -364,6 +368,7 @@ public class QuestionFragment extends Fragment {
         conditionallyPrepareExistingAnswers();
         if ((questionData != null) && (questionData.getAnswerString() != null)) {
             editText.setText(questionData.getAnswerString());
+            editText.setSelectAllOnFocus(true);
         } else {
             // Create text strings that represent the question and its answer choices
             String options = "Text-field input type = " + inputTextType.toString();

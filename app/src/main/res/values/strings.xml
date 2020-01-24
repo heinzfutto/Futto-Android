@@ -26,6 +26,8 @@
     <string name="download_settings_url">/get_study_params</string>
     <string name="forgot_password_url">/forgot_password</string>
     <string name="reset_password_url">/set_password</string>
+    <string name="reset_password_with_security_url">/set_password_with_security</string>
+    <string name="security_detail_url">/getsecuritydetails</string>
     <string name="graph_url">/graph</string>
     <string name="register_url">/register_user</string>
     <string name="login_url">/authorization_user</string>
@@ -194,9 +196,7 @@
     <string name="doNotConsentButton">I do not consent</string>
     <string name="doNotConsentAlert"> You have indicated you do not consent to the terms of this application.  If you press "I understand" the app will exit, and you will not be enrolled in the study.  If you press "Cancel" the app will not exit and you will be able to press the "I Consent" button, which will then enroll you in the study. </string>
     <string name="default_consent_form_text">
-        The Consent Form\n
-        Goes\n
-        Here.
+        This app is used for study purpose only\n
     </string>
 
     <!-- Survey Settings Keys -->

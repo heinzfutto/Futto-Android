@@ -36,7 +36,27 @@ public class ResetPassword {
 		this.currentActivity = currentActivity;
 		this.appContext = currentActivity.getApplicationContext();
 	}
-	
+
+
+	public void tryToResetPasswordWithoutCheckInputsAnd(String newPassword, String confirmNewPassword) {
+		this.newPassword = newPassword;
+		// If the new password has too few characters, pop up an alert, and do nothing else
+		if (!PersistentData.passwordMeetsRequirements(newPassword)) {
+			String alertMessage = String.format(appContext.getString(R.string.password_too_short), PersistentData.minPasswordLength());
+			AlertsManager.showAlert(alertMessage, appContext.getString(R.string.reset_password_error_alert_title), currentActivity);
+			return;
+		}
+		// If the new passwords don't match, pop up an alert, and do nothing else
+		if (!newPassword.equals(confirmNewPassword)) {
+			AlertsManager.showAlert(appContext.getString(R.string.password_mismatch),
+					appContext.getString(R.string.reset_password_error_alert_title),
+					currentActivity);
+			return;
+		}
+		// If new password and confirm new password are valid, try resetting them on the server
+		doResetPasswordRequestWithoutCheck();
+	}
+
 	public void checkInputsAndTryToResetPassword(String currentPassword, String newPassword, String confirmNewPassword) {
 		this.hashedCurrentPassword = EncryptionEngine.safeHash(currentPassword);
 		this.newPassword = newPassword;
@@ -49,14 +69,47 @@ public class ResetPassword {
 		// If the new passwords don't match, pop up an alert, and do nothing else
 		if (!newPassword.equals(confirmNewPassword)) {
 			AlertsManager.showAlert(appContext.getString(R.string.password_mismatch),
-									appContext.getString(R.string.reset_password_error_alert_title),
-									currentActivity);
+					appContext.getString(R.string.reset_password_error_alert_title),
+					currentActivity);
 			return;
 		}
 		// If new password and confirm new password are valid, try resetting them on the server
 		doResetPasswordRequest();
 	}
-	
+
+	/** Runs the network operation to reset the password on the server.*/
+	public void doResetPasswordRequestWithoutCheck() {
+		String url = addWebsitePrefix(appContext.getString(R.string.reset_password_with_security_url));
+		new HTTPUIAsync(url, currentActivity) {
+
+			@Override
+			protected Void doInBackground(Void... arg0) {
+				parameters = PostRequest.makeParameter("new_password", newPassword);
+				responseCode = PostRequest.httpRequestcode(parameters, url, null);
+				return null;
+			}
+
+			@Override
+			protected void onPostExecute(Void arg) {
+				super.onPostExecute(arg);
+				if (responseCode == 200) {
+					// Set the password on the device to the new permanent password
+					PersistentData.setPassword(newPassword);
+					// Set the user to "logged in"
+					PersistentData.loginOrRefreshLogin();
+					// Show a Toast with a "Success!" message
+					String message = appContext.getString(R.string.pass_reset_complete);
+					Toast.makeText(appContext, message, Toast.LENGTH_LONG).show();
+					// Kill the activity
+					currentActivity.finish();
+				} else {
+					AlertsManager.showAlert(responseCode, appContext.getString(R.string.reset_password_error_alert_title), currentActivity);
+				}
+			}
+		};
+	}
+
+
 	/** Runs the network operation to reset the password on the server.*/
 	public void doResetPasswordRequest() {
 		String url = addWebsitePrefix(appContext.getString(R.string.reset_password_url));

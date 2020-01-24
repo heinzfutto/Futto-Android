@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     style="@style/MainTextStyle"
     android:padding="20dp"
-    android:textSize="24sp"
+    android:textSize="20sp"
     android:textStyle="bold"
     android:layout_marginTop="50dp"
     android:text="@string/question_error_text"

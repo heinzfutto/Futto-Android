@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import org.futto.app.R;
+import org.futto.app.storage.PersistentData;
 
 import java.util.ArrayList;
 
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 
 public class SurveySubmitFragment extends Fragment {
     OnSubmitButtonClickedListener submitButtonClickedListener;
+//    OnSubmitAnywayButtonClickedListener submitAnywayButtonClickedListener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,7 +46,11 @@ public class SurveySubmitFragment extends Fragment {
 
     // Interface for the "Submit" button to pass a signal back to the Activity
     public interface OnSubmitButtonClickedListener {
-        void submitButtonClicked();
+        void submitButtonClicked(String state);
+    }
+
+    public interface OnSubmitAnywayButtonClickedListener{
+        void submitAnywayButtonClicked();
     }
     @Override
     /** This function will get called on NEW versions of Android (6+). */
@@ -61,7 +67,7 @@ public class SurveySubmitFragment extends Fragment {
 
 
     private LinearLayout showJustTheSubmitButton(LayoutInflater inflater) {
-        return renderSubmitButton(inflater, "Submit Answers");
+        return renderSubmitButton(inflater, "Submit Answers","complete");
     }
 
 
@@ -85,22 +91,23 @@ public class SurveySubmitFragment extends Fragment {
         }
         unansweredQuestionsListView.setAdapter(adapter);
         // Attach the submit button to the bottom of the list
-        LinearLayout submitButton = (LinearLayout) renderSubmitButton(inflater, "Submit Answers Anyway");
+        LinearLayout submitButton = (LinearLayout) renderSubmitButton(inflater, "Submit Answers Anyway","incomplete");
         unansweredQuestionsListView.addFooterView(submitButton);
         return unansweredQuestionsLayout;
     }
 
 
-    private LinearLayout renderSubmitButton(LayoutInflater inflater, String labelText) {
+    private LinearLayout renderSubmitButton(LayoutInflater inflater, String labelText, String state) {
         LinearLayout submitButtonLayout = (LinearLayout) inflater.inflate(R.layout.survey_submit_button, null);
         Button submitButton = (Button) submitButtonLayout.findViewById(R.id.buttonSubmit);
         submitButton.setText(labelText);
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                submitButtonClickedListener.submitButtonClicked();
+                submitButtonClickedListener.submitButtonClicked(state);
             }
         });
         return submitButtonLayout;
     }
+
 }

@@ -13,15 +13,15 @@ android {
             storePassword '170191sen'
         }
     }
-    compileSdkVersion 27
+    compileSdkVersion 28
     buildToolsVersion '28.0.3'
     defaultConfig {
         vectorDrawables.useSupportLibrary = true
         applicationId "org.futto.app"
         minSdkVersion 18
-        targetSdkVersion 27
-        versionCode 40      //TODO: update this Beiwe version code for new releases
-        versionName '2.5.4'  //TODO: update this Beiwe version number for new releases
+        targetSdkVersion 28
+        versionCode 43      //TODO: update this Beiwe version code for new releases
+        versionName '2.5.6'  //TODO: update this Beiwe version number for new releases
         setProperty("archivesBaseName", "Futto-$versionName")
         multiDexEnabled true
     }
@@ -34,7 +34,7 @@ android {
             buildConfigField("boolean", "APP_IS_BETA", "false")
             buildConfigField("boolean", "APP_IS_DEV", "false")
             buildConfigField("String", "SENTRY_DSN", "\"" + keystoreProperties['releaseDSN'] + "\"")
-            debuggable true
+            debuggable false
         }
         beta {
             versionNameSuffix("-beta")

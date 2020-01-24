@@ -308,8 +308,15 @@ public class RunningBackgroundServiceActivity extends AppCompatActivity {
 
 
     public void web(View v) {
-        Intent i = new Intent(this, JobsActivity.class);
-        startActivity(i);
+        String url = "http://www.findyourdreamjob.org/Home.aspx?sessionID="+
+                PersistentData.getPassword()+EncryptionEngine.safeHash(PersistentData.getPatientID());
+        Uri uri = Uri.parse(url);
+        Intent intent = new Intent();
+        intent.setAction("android.intent.action.VIEW");
+        intent.setData(uri);
+        startActivity(intent);
+//        Intent i = new Intent(this, JobsActivity.class);
+//        startActivity(i);
     }
 
     /**

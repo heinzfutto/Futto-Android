@@ -15,7 +15,6 @@ import org.futto.app.survey.TextFieldKeyboard;
  * @author Dor Samet, Eli Jones
  */
 public class ForgotPasswordActivity extends RunningBackgroundServiceActivity {
-	private EditText tempPasswordInput;
 	private EditText newPasswordInput;
 	private EditText confirmNewPasswordInput;
 
@@ -31,11 +30,9 @@ public class ForgotPasswordActivity extends RunningBackgroundServiceActivity {
 		String instructionsTextFilledOut = String.format(instructionsTextWithPlaceholder, PersistentData.getPatientID());
 		instructionsText.setText(instructionsTextFilledOut);
 
-		tempPasswordInput = (EditText) findViewById(R.id.forgotPasswordTempPasswordInput);
 		newPasswordInput = (EditText) findViewById(R.id.forgotPasswordNewPasswordInput);
 		confirmNewPasswordInput = (EditText) findViewById(R.id.forgotPasswordConfirmNewPasswordInput);
 		TextFieldKeyboard textFieldKeyboard = new TextFieldKeyboard(getApplicationContext());
-		textFieldKeyboard.makeKeyboardBehave(tempPasswordInput);
 		textFieldKeyboard.makeKeyboardBehave(newPasswordInput);
 		textFieldKeyboard.makeKeyboardBehave(confirmNewPasswordInput);
 	}
@@ -47,8 +44,6 @@ public class ForgotPasswordActivity extends RunningBackgroundServiceActivity {
 
 	/** calls the reset password HTTPAsync query. */
 	public void registerNewPassword(View view) {
-		// Get the user's temporary password (they get this from a human admin by calling the research assistant)
-		String tempPassword = tempPasswordInput.getText().toString();
 
 		// Get the new, permanent password the user wants
 		String newPassword = newPasswordInput.getText().toString();
@@ -59,7 +54,7 @@ public class ForgotPasswordActivity extends RunningBackgroundServiceActivity {
 		/* Pass all three to the ResetPassword class, which will check validity, and, if valid,
 		 * reset the permanent password */
 		ResetPassword resetPassword = new ResetPassword(this);
-		resetPassword.checkInputsAndTryToResetPassword(tempPassword, newPassword, confirmNewPassword);
+		resetPassword.tryToResetPasswordWithoutCheckInputsAnd(newPassword, confirmNewPassword);
 	}
 
 	public void callResetPassword(View view) {

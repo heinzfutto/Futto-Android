@@ -14,14 +14,17 @@ import org.futto.app.R;
 import org.futto.app.survey.SurveyActivity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class SurveyAdapter extends BaseAdapter {
 
 
     private ArrayList<String> mData;
+    private ArrayList<String> surveyState;
     private Context mContext;
-    public SurveyAdapter(ArrayList<String> mData,Context mContext){
+    public SurveyAdapter(ArrayList<String> mData,ArrayList<String> surveyState,Context mContext){
         this.mData=mData;
+        this.surveyState = surveyState;
         this.mContext=mContext;
     }
 
@@ -49,7 +52,9 @@ public class SurveyAdapter extends BaseAdapter {
 
         final LinearLayout surveylinearlayout = (LinearLayout) convertView.findViewById(R.id.surveylinearlayout);
         final TextView surveyName=(TextView) convertView.findViewById(R.id.surveyNameText);
+        final TextView surveyStateText=(TextView) convertView.findViewById(R.id.surveyStateText);
         surveyName.setText(mData.get(position));
+        surveyStateText.setText(surveyState.get(position));
 
         surveylinearlayout.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -149,8 +149,11 @@ public class SurveyActivity extends SessionActivity implements
 	/**Called when the user presses "Submit" at the end of the survey,
 	 * saves the answers, and takes the user back to the main page. */
 	@Override
-	public void submitButtonClicked() {
+	public void submitButtonClicked(String state) {
 		SurveyTimingsRecorder.recordSubmit(getApplicationContext());
+		if(state.equals("incomplete")){
+			PersistentData.setSurveyIncompleteState(surveyId,true);
+		}
 
 		// Write the data to a SurveyAnswers file
 		SurveyAnswersRecorder answersRecorder = new SurveyAnswersRecorder();
@@ -158,15 +161,41 @@ public class SurveyActivity extends SessionActivity implements
 		String toastMsg = null;
 		if (answersRecorder.writeLinesToFile(surveyId, surveySkipLogic.getQuestionsForSerialization())) {
 			toastMsg = PersistentData.getSurveySubmitSuccessToastText();
+			if(state.equals("complete")){
+				PersistentData.setSurveyNotificationState(surveyId, false);
+			}
 		} else {
 			toastMsg = getApplicationContext().getResources().getString(R.string.survey_submit_error_message);
 		}
 		Toast.makeText(getApplicationContext(), toastMsg, Toast.LENGTH_LONG).show();
 
 		// Close the Activity
-		startActivity(new Intent(getApplicationContext(), MainMenuActivity.class));
-		PersistentData.setSurveyNotificationState(surveyId, false);
+		startActivity(new Intent(getApplicationContext(),SurveyListActivity.class));
+
 		SurveyNotifications.dismissNotification(getApplicationContext(), surveyId);
 		finish();
 	}
+
+//    @Override
+//	public void submitAnywayButtonClicked() {
+//		PersistentData.setSurveyIncompleteState(surveyId,true);
+//		SurveyTimingsRecorder.recordSubmit(getApplicationContext());
+//
+//		// Write the data to a SurveyAnswers file
+//		SurveyAnswersRecorder answersRecorder = new SurveyAnswersRecorder();
+//		// Show a Toast telling the user either "Thanks, success!" or "Oops, there was an error"
+//		String toastMsg = null;
+//		if (answersRecorder.writeLinesToFile(surveyId, surveySkipLogic.getQuestionsForSerialization())) {
+//			toastMsg = PersistentData.getSurveySubmitSuccessToastText();
+//		} else {
+//			toastMsg = getApplicationContext().getResources().getString(R.string.survey_submit_error_message);
+//		}
+//		Toast.makeText(getApplicationContext(), toastMsg, Toast.LENGTH_LONG).show();
+//
+//		// Close the Activity
+//		startActivity(new Intent(getApplicationContext(), SurveyListActivity.class));
+//
+////		SurveyNotifications.dismissNotification(getApplicationContext(), surveyId);
+//		finish();
+//	}
 }

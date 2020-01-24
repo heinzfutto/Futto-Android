@@ -13,6 +13,7 @@ import org.futto.app.networking.SurveyDownloader;
 import org.futto.app.storage.PersistentData;
 import org.futto.app.storage.TextFileManager;
 import org.futto.app.ui.LoadingActivity;
+import org.futto.app.ui.user.LoginActivity;
 
 public class ConsentFormActivity extends RunningBackgroundServiceActivity {
 	
@@ -50,14 +51,17 @@ public class ConsentFormActivity extends RunningBackgroundServiceActivity {
 		// Download the survey questions and schedule the surveys
 		SurveyDownloader.downloadSurveys(getApplicationContext());
 
-		
 		// Create new data files, these will now have a patientID prepended to those files
 		TextFileManager.initialize(getApplicationContext());
 		TextFileManager.makeNewFilesForEverything();
 		
 		//This is important.  we need to start timers...
 		backgroundService.doSetup();
-		
+
+//		// Set Security Problem and Answer
+//		LoginActivity login = new LoginActivity();
+//		login.getSecurityProblemAndAnswer(this, PersistentData.getPatientID());
+//
 		// Start the Main Screen Activity, destroy this activity
 		startActivity(new Intent(getApplicationContext(), LoadingActivity.class) );
 		finish();

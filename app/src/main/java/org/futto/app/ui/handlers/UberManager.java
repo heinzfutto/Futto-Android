@@ -35,7 +35,9 @@ public class UberManager {
     private static final String UBER_PRODUCT_URL = "https://api.uber.com/v1.2/products?";
     private static final String UBER_URL_ETA = "https://api.uber.com/v1.2/estimates/time?";
     private static final String UBER_URL_PRICE = "https://api.uber.com/v1.2/estimates/price?";
-    private static final String UBER_KEY = "Bearer JA.VUNmGAAAAAAAEgASAAAABwAIAAwAAAAAAAAAEgAAAAAAAAG8AAAAFAAAAAAADgAQAAQAAAAIAAwAAAAOAAAAkAAAABwAAAAEAAAAEAAAAMkkK9-nq3ml5E59TAcxdTBsAAAAYUwC1oqFH6v5L5lGu8AvikyLZPNQD-QJUhymSp3YQmwN0eDstPRqyQzvG4oAmKEqbQHSrlbXbSvRDcEHZL0oweFORhWeuZx53VOEmwa1Rlr-APmSvyQTZVItEDouLIAUNoZOtmonXesaRG86DAAAAN0bsPnbWSADKLFPOiQAAABiMGQ4NTgwMy0zOGEwLTQyYjMtODA2ZS03YTRjZjhlMTk2ZWU";
+    private static final String UBER_KEY = "Token GEej4_2O2nyzX-FHSaXAXCSrj-7S0QaVvOAMOg3F";
+//    private static final String UBER_KEY = "Bearer JA.VUNmGAAAAAAAEgASAAAABwAIAAwAAAAAAAAAEgAAAAAAAAG8AAAAFAAAAAAADgAQAAQAAAAIAAwAAAAOAAAAkAAAABwAAAAEAAAAEAAAAMkkK9-nq3ml5E59TAcxdTBsAAAAYUwC1oqFH6v5L5lGu8AvikyLZPNQD-QJUhymSp3YQmwN0eDstPRqyQzvG4oAmKEqbQHSrlbXbSvRDcEHZL0oweFORhWeuZx53VOEmwa1Rlr-APmSvyQTZVItEDouLIAUNoZOtmonXesaRG86DAAAAN0bsPnbWSADKLFPOiQAAABiMGQ4NTgwMy0zOGEwLTQyYjMtODA2ZS03YTRjZjhlMTk2ZWU";
+//    private static final String UBER_KEY = "JA.VUNmGAAAAAAAEgASAAAABwAIAAwAAAAAAAAAEgAAAAAAAAH4AAAAFAAAAAAADgAQAAQAAAAIAAwAAAAOAAAAzAAAABwAAAAEAAAAEAAAAEOexhplr6vpiC3-rJjYMr2nAAAAq-OQ3ZU5zxBudxqI6bxwTy8REaR2fH8KFjMVTfQ-As4VDlzzG3BuIA7mRtzy7vy4mPjGoLQ8meGpN_9AhEvHiggfVYx5nddtDrzCub7opbLw93roykx77JPqyV2r9Bcjrn-un8J2gXWBH3nUprIuJJgcY9Hi75CgVGphCegqbkd9-K72RLmBzzr-DV--un5auCmrxKd6eva-UQbXHIGrPc8H0D6uEVEADAAAABEU-PGJCEhXzsC-VCQAAABiMGQ4NTgwMy0zOGEwLTQyYjMtODA2ZS03YTRjZjhlMTk2ZWU";
     public static UberManager getInstance(Fragment f) {
         if (instance == null) {
             instance = new UberManager();
@@ -156,7 +158,8 @@ public class UberManager {
 
             tryUberEtaDetails(UBER_URL_ETA, productId, start, end, listener);
         } catch (Exception e) {
-
+//            tryUberDetails(UBER_URL_PRICE, "", 1.0, start, end, listener);
+//            e.printStackTrace();
         }
     }
 

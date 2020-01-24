@@ -55,6 +55,8 @@ public class PersistentData {
 	private static final String VOICE_RECORDING_MAX_TIME_LENGTH_SECONDS = "voice_recording_max_time_length_seconds";
 	private static final String WIFI_LOG_FREQUENCY_SECONDS = "wifi_log_frequency_seconds";
 	private static final String SURVEY_IDS = "survey_ids";
+	private static final String SECURITY_QUESTION = "security_question";
+	private static final String SECURITY_ANSWER = "security_answer";
 //	private static final String SURVEY_QUESTION_IDS = "question_ids";
 
 	/*#####################################################################################
@@ -136,6 +138,15 @@ public class PersistentData {
 		editor.commit();
 	}
 
+	public static void setSecurityQuestion(String question){
+		editor.putString(SECURITY_QUESTION, question );
+		editor.commit();
+	}
+
+	public static void setSecurityAnswer(String answer){
+		editor.putString(SECURITY_ANSWER, answer );
+		editor.commit();
+	}
 
 	/*#####################################################################################
 	################################# Listener Settings ###################################
@@ -183,8 +194,10 @@ public class PersistentData {
 
 	private static final long DEFAULT_CHECK_FOR_NEW_SURVEYS_PERIOD = 24 * 60;
 	private static final long DEFAULT_CREATE_NEW_DATA_FILES_PERIOD = 15 * 60;
-	private static final long DEFAULT_GPS_OFF_MINIMUM_DURATION = 11 * 60;
-	private static final long DEFAULT_GPS_ON_DURATION = 15 * 60;
+//	private static final long DEFAULT_GPS_OFF_MINIMUM_DURATION = 11 * 60;
+    private static final long DEFAULT_GPS_OFF_MINIMUM_DURATION = 8 * 60;
+//	private static final long DEFAULT_GPS_ON_DURATION = 15 * 60;
+	private static final long DEFAULT_GPS_ON_DURATION = 8 * 60;
 	private static final long DEFAULT_SECONDS_BEFORE_AUTO_LOGOUT = Long.MAX_VALUE;
 	private static final long DEFAULT_UPLOAD_DATA_FILES_PERIOD = 60;
 	private static final long DEFAULT_VOICE_RECORDING_MAX_TIME_LENGTH = 4 * 60;
@@ -296,7 +309,8 @@ public class PersistentData {
 
 	public static String getPassword() { return pref.getString( KEY_PASSWORD, null ); }
 	public static String getPatientID() { return pref.getString(KEY_ID, NULL_ID); }
-
+    public static String getSecurityQuestion(){return pref.getString(SECURITY_QUESTION, null);}
+    public static String getSecurityAnswer(){return pref.getString(SECURITY_ANSWER,null);}
 	/*###########################################################################################
 	#################################### Contact Numbers ########################################
 	###########################################################################################*/
@@ -322,6 +336,7 @@ public class PersistentData {
 	public static String getSurveyType(String surveyId){ return pref.getString(surveyId + "-type", null); }
 	public static String getSurveySettings(String surveyId){ return pref.getString(surveyId + "-settings", null); }
 	public static Boolean getSurveyNotificationState( String surveyId) { return pref.getBoolean(surveyId + "-notificationState", false ); }
+	public static Boolean getSurveyIncompleteState(String surveyId){return pref.getBoolean(surveyId+"-incomplete",false);}
 	public static long getMostRecentSurveyAlarmTime(String surveyId) { return pref.getLong( surveyId + "-prior_alarm", MAX_LONG); }
 
 	public static void createSurveyData(String surveyId, String content, String timings, String type, String settings){
@@ -349,6 +364,10 @@ public class PersistentData {
 	//survey state storage
 	public static void setSurveyNotificationState(String surveyId, Boolean bool ) {
 		editor.putBoolean(surveyId + "-notificationState", bool );
+		editor.commit(); }
+	//survey state storage
+	public static void setSurveyIncompleteState(String surveyId, Boolean bool ) {
+		editor.putBoolean(surveyId + "-incomplete", bool );
 		editor.commit(); }
 	public static void setMostRecentSurveyAlarmTime(String surveyId, long time) {
 		editor.putLong(surveyId + "-prior_alarm", time);

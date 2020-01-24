@@ -23,9 +23,12 @@ import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -50,6 +53,24 @@ public class PostRequest {
 	 ##################### Publicly Accessible Functions ###############################
 	 #################################################################################*/
 
+	/**For use with Async tasks.
+	 * This opens a connection with the server, sends the HTTP parameters, then receives security question and answer, and returns it.
+	 * @param parameters HTTP parameters
+	 * @return HashMap<String,String> SecurityDetail */
+	public static HashMap<String,String> httpGetSecurityDetail( String parameters, String url ) {
+		try {
+//			return httpRequestString(parameters, url);
+			return getSecurityDetailRequest( parameters, new URL(url) );
+        }
+		catch (MalformedURLException e) {
+			Log.e("PostRequestFileUpload", "malformed URL");
+			e.printStackTrace();
+			return null; }
+		catch (IOException e) {
+			e.printStackTrace();
+			Log.e("PostRequest","Network error: " + e.getMessage());
+			return null; }
+	}
 
 	/**For use with Async tasks.
 	 * This opens a connection with the server, sends the HTTP parameters, then receives a response code, and returns it.
@@ -295,6 +316,24 @@ public class PostRequest {
 		return response;
 	}
 
+	private static HashMap<String,String> getSecurityDetailRequest(String parameters, URL url) throws IOException {
+		HttpsURLConnection connection = setupHTTP(parameters, url, "");
+		int response = connection.getResponseCode();
+		HashMap<String,String> security = new HashMap<String,String>();
+		if (response == 200) {
+			String responseBody = readResponse(connection);
+			try {
+				JSONObject responseJSON = new JSONObject(responseBody);
+				security.put("question",responseJSON.getString("question"));
+				security.put("answer", responseJSON.getString("answer"));
+			} catch (JSONException e) {
+				CrashHandler.writeCrashlog(e, appContext);
+			}
+		}
+		connection.disconnect();
+		return security;
+	}
+
 
 	private static int doRegisterRequest(String parameters, URL url) throws IOException {
 		HttpsURLConnection connection = setupHTTP(parameters, url, null);
@@ -506,6 +545,19 @@ public class PostRequest {
 
 	public static String addWebsitePrefix(String URL){
 		String serverUrl = PersistentData.getServerUrl();
+		if ((BuildConfig.CUSTOMIZABLE_SERVER_URL) && (serverUrl != null)) {
+			return serverUrl + URL;
+		} else {
+			// If serverUrl == null, this should be an old version of the app that didn't let the
+			// user specify the URL during registration, so assume the URL is either
+			// studies.beiwe.org or staging.beiwe.org.
+			if (BuildConfig.APP_IS_BETA) return appContext.getResources().getString(R.string.staging_website) + URL;
+			else return appContext.getResources().getString(R.string.production_website) + URL;
+		}
+	}
+
+	public static String addConsentWebsitePrefix(String URL){
+		String serverUrl = "https://consent.findyourdreamjob.org";
 		if ((BuildConfig.CUSTOMIZABLE_SERVER_URL) && (serverUrl != null)) {
 			return serverUrl + URL;
 		} else {

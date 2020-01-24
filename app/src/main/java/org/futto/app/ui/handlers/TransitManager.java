@@ -60,12 +60,15 @@ public class TransitManager {
     }
 
     private void parseResponse(JSONObject response, TransitManagerListener listener) throws JSONException {
+        Log.d("route response",response.toString());
         JSONArray routesList = response.getJSONArray("routes");
+        Log.d("routesList",routesList.toString());
         List<Routes> transitRoutes = new ArrayList<Routes>();
         for (int i = 0; i < routesList.length(); i++) {
             transitRoutes.add(new Routes(routesList.getJSONObject(i)));
+            Log.d("routes item",routesList.getJSONObject(i).toString());
         }
-        Log.d("Location1",response.toString());
+
         listener.onResponseRoutes(transitRoutes);
 //        TransitAdapter adapter = new TransitAdapter(fragment.getContext(), transitRoutes);
 //        adapter.notifyDataSetChanged();
@@ -127,6 +130,7 @@ public class TransitManager {
                         GetRequest.makeParameter("departure_time", departureTime.getTime() / 1000l + "") +
                         GetRequest.makeParameter("mode", mode);
                 response = GetRequest.httpGetResponse(parameters, url, new ArrayList<String>());
+                Log.d("reponse transit: ", response.toString());
                 System.out.println(response);
                 return null;
             }

@@ -145,8 +145,10 @@ public class GPSListener implements LocationListener {
 
 	private void setUpdateFrequency() {
 		if (timeFrameLocations.isEmpty()) {
-			PersistentData.setGpsOffDurationSeconds(900);
-			updateFrequency = 1000L*30;
+//			PersistentData.setGpsOffDurationSeconds(900);
+			PersistentData.setGpsOffDurationSeconds(480);
+//			updateFrequency = 1000L*30;
+			updateFrequency = 1000L*20;
 			return;
 		}
 		Location start = timeFrameLocations.get(0);
@@ -159,8 +161,10 @@ public class GPSListener implements LocationListener {
 		distance = 0;
 		lastLocation = null;
 		if (!listenerOffMap.containsKey(Math.floor(calculatedSpeed))) {
-			PersistentData.setGpsOffDurationSeconds(900);
-			updateFrequency = 1000L*60;
+//			PersistentData.setGpsOffDurationSeconds(900);
+			PersistentData.setGpsOffDurationSeconds(480);
+//			updateFrequency = 1000L*60;
+			updateFrequency = 1000L*40;
 			return;
 		}
 		updateFrequency = PersistentData.getGpsOnDurationMilliseconds() / listenerOnMap.get(Math.floor(calculatedSpeed));

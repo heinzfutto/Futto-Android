@@ -1,5 +1,7 @@
 package org.futto.app.ui.user;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Window;
@@ -31,18 +33,13 @@ public class JobsActivity extends SessionActivity {
         //setContentView(R.layout.activity_jobs);
 
 //        sendSession();
-        getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+
+
+//        getWindow().requestFeatvure(Window.FEATURE_NO_TITLE);
         mWebView = new WebView(this);
         String url = "http://www.findyourdreamjob.org/Home.aspx?sessionID="+
                 PersistentData.getPassword()+EncryptionEngine.safeHash(PersistentData.getPatientID());
         mWebView.loadUrl(url);
-//        System.out.println(url);
-//        System.out.println(PersistentData.getPassword());
-//        System.out.println(EncryptionEngine.safeHash(PersistentData.getPassword()));
-//        System.out.println(PersistentData.getPatientID());
-//        System.out.println(EncryptionEngine.safeHash(PersistentData.getPatientID()));
-//        mWebView.loadUrl("http://www.findyourdreamjob.org/");
-//        http://www.findyourdreamjob.org/Home.aspx?sessionID=jZae727K08KaOmKSgOaGzww_XVqGr_PKEgIMkjrcbJI=5tiY8qfXWFnatDwNH9SzXgAlVDktfb5hvqswLVJh7s0=
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {

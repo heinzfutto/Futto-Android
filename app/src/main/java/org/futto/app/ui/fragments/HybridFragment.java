@@ -119,16 +119,19 @@ public class HybridFragment extends Fragment implements OnMapReadyCallback {
                     routes.addAll(r);
                     adapter.notifyDataSetChanged();
                     List<Step> transits = new ArrayList<Step>();
-
-                    for (Step s : r.get(0).getSteps()) {
-                        if (s.getType().contentEquals("TRANSIT") || s.getType().contentEquals("DRIVING")) {
-                            transits.add(s);
+                    for(int i=0;i<r.size();i++){
+                        for (Step s : r.get(i).getSteps()) {
+                            if (s.getType().contentEquals("TRANSIT") || s.getType().contentEquals("DRIVING")) {
+                                transits.add(s);
+                            }
                         }
                     }
 
+
                     if (!transits.isEmpty()) {
-                        getStops(transits);
-                    }
+                            getStops(transits);
+                        }
+
                 }
 
                 @Override

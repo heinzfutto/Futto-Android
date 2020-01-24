@@ -22,7 +22,8 @@ import com.uber.sdk.rides.client.error.ApiError;
  * @author Dev */
 public class UberHandler {
 	private static final String CLIENT_ID = "b79PP-CdlzbQGAgDxWC78G19Gjif5Z89";
-	private static final String TOKEN = "6L76yWHXVP1XZ_8wjQJ3EYKuTtP-vYHEmOs81WmE";
+//	private static final String TOKEN = "6L76yWHXVP1XZ_8wjQJ3EYKuTtP-vYHEmOs81WmE";
+	private static final String TOKEN = "GEej4_2O2nyzX-FHSaXAXCSrj-7S0QaVvOAMOg3F";
 
 	public static void showUber(RideRequestButton rideRequestButton, LatLng pickup, LatLng dropOff) {
 		RideParameters rideParams = new RideParameters.Builder()

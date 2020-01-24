@@ -119,10 +119,15 @@
                 <action android:name="android.intent.action.AIRPLANE_MODE" />
             </intent-filter>
         </receiver>
-
+        <activity
+            android:name=".ui.registration.UserIDForSecurityProblemActivity"
+            android:label="User ID For Security Problem" />
         <activity
             android:name=".ui.registration.ResetPasswordActivity"
             android:label="@string/title_activity_reset_password" />
+        <activity
+            android:name=".ui.registration.SecurityProblemActivity"
+            android:label="Security Problem" />
         <activity
             android:name=".ui.user.AboutActivityLoggedOut"
             android:label="@string/title_activity_about" />

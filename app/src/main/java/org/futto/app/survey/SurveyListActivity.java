@@ -26,6 +26,7 @@ public class SurveyListActivity extends SessionActivity {
     private ListView listView;
     private SurveyAdapter surveyAdapter;
     private ArrayList<String> surveyId;
+    private ArrayList<String> surveyState;
     private Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,11 +36,22 @@ public class SurveyListActivity extends SessionActivity {
         listView = (ListView) findViewById(R.id.surveylistView);
         Intent triggerIntent = getIntent();
         surveyId = new ArrayList<String>();
+        surveyState = new ArrayList<String>();
         for(int i=0;i<PersistentData.getSurveyIds().size();i++){
-            surveyId.add(PersistentData.getSurveyIds().get(i));
+            String tmpsurvey = PersistentData.getSurveyIds().get(i);
+            if (PersistentData.getSurveyNotificationState( tmpsurvey)) {
+                if(PersistentData.getSurveyIncompleteState(tmpsurvey) == true){
+                    surveyId.add(PersistentData.getSurveyIds().get(i));
+                    surveyState.add("Incomplete");
+                }else{
+                    surveyId.add(PersistentData.getSurveyIds().get(i));
+                    surveyState.add("new");
+                }
+
+            }
         }
 
-        surveyAdapter = new SurveyAdapter(surveyId,this);
+        surveyAdapter = new SurveyAdapter(surveyId,surveyState,this);
         displayToobar();
         listView.setAdapter(surveyAdapter);
     }
