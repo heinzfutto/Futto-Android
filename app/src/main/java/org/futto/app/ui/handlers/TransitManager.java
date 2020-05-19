@@ -1,15 +1,13 @@
 package org.futto.app.ui.handlers;
 
 import android.location.Location;
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 
 import org.futto.app.networking.GetRequest;
 import org.futto.app.networking.HTTPUIAsync;
-import org.futto.app.ui.adapters.TransitAdapter;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,6 +25,8 @@ public class TransitManager {
     private static Fragment fragment;
     private static TransitManager instance;
     private static String GOOGLE_KEY = "AIzaSyDRJSnmycmwl9emHWdzBErbzUdT7rRGJa0";
+    // try new google key as follows
+//    private static String GOOGLE_KEY = "AIzaSyCPGkT_1i3FY3BZmTVBvbzjbptKVFTqFY8";
     private static String GOOGLE_URL = "https://maps.googleapis.com/maps/api/directions/json?";
     private static String TRANSIT_KEY = "HYRtJEhgVk8YrXqRZqZMnK5a5";
     private static String TRANSIT_URL = "https://truetime.portauthority.org/bustime/api/v3/getstops?";

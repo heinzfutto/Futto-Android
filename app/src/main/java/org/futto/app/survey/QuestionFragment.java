@@ -7,7 +7,6 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.DrawableRes;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -342,21 +341,25 @@ public class QuestionFragment extends Fragment {
             case NUMERIC:
                 editText = (EditText) inflater.inflate(R.layout.survey_free_number_input, null);
                 editText.setSelectAllOnFocus(true);
+                editText.setCursorVisible(true);
                 break;
 
             case SINGLE_LINE_TEXT:
                 editText = (EditText) inflater.inflate(R.layout.survey_free_text_input, null);
                 editText.setSelectAllOnFocus(true);
+                editText.setCursorVisible(true);
                 break;
 
             case MULTI_LINE_TEXT:
                 editText = (EditText) inflater.inflate(R.layout.survey_multiline_text_input, null);
                 editText.setSelectAllOnFocus(true);
+                editText.setCursorVisible(true);
                 break;
 
             default:
                 editText = (EditText) inflater.inflate(R.layout.survey_free_text_input, null);
                 editText.setSelectAllOnFocus(true);
+                editText.setCursorVisible(true);
                 break;
         }
 
@@ -369,6 +372,7 @@ public class QuestionFragment extends Fragment {
         if ((questionData != null) && (questionData.getAnswerString() != null)) {
             editText.setText(questionData.getAnswerString());
             editText.setSelectAllOnFocus(true);
+            editText.setCursorVisible(true);
         } else {
             // Create text strings that represent the question and its answer choices
             String options = "Text-field input type = " + inputTextType.toString();

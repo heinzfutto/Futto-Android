@@ -2,9 +2,8 @@ package org.futto.app.survey;
 
 import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -13,7 +12,6 @@ import org.futto.app.R;
 import org.futto.app.session.SessionActivity;
 import org.futto.app.storage.PersistentData;
 import org.futto.app.storage.TextFileManager;
-import org.futto.app.ui.user.MainMenuActivity;
 import org.futto.app.ui.utils.SurveyNotifications;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -153,21 +151,22 @@ public class SurveyActivity extends SessionActivity implements
 		SurveyTimingsRecorder.recordSubmit(getApplicationContext());
 		if(state.equals("incomplete")){
 			PersistentData.setSurveyIncompleteState(surveyId,true);
-		}
+		}else{
 
-		// Write the data to a SurveyAnswers file
-		SurveyAnswersRecorder answersRecorder = new SurveyAnswersRecorder();
-		// Show a Toast telling the user either "Thanks, success!" or "Oops, there was an error"
-		String toastMsg = null;
-		if (answersRecorder.writeLinesToFile(surveyId, surveySkipLogic.getQuestionsForSerialization())) {
-			toastMsg = PersistentData.getSurveySubmitSuccessToastText();
-			if(state.equals("complete")){
-				PersistentData.setSurveyNotificationState(surveyId, false);
+			// Write the data to a SurveyAnswers file
+			SurveyAnswersRecorder answersRecorder = new SurveyAnswersRecorder();
+			// Show a Toast telling the user either "Thanks, success!" or "Oops, there was an error"
+			String toastMsg = null;
+			if (answersRecorder.writeLinesToFile(surveyId, surveySkipLogic.getQuestionsForSerialization())) {
+				toastMsg = PersistentData.getSurveySubmitSuccessToastText();
+				if(state.equals("complete")){
+					PersistentData.setSurveyNotificationState(surveyId, false);
+				}
+			} else {
+				toastMsg = getApplicationContext().getResources().getString(R.string.survey_submit_error_message);
 			}
-		} else {
-			toastMsg = getApplicationContext().getResources().getString(R.string.survey_submit_error_message);
+			Toast.makeText(getApplicationContext(), toastMsg, Toast.LENGTH_LONG).show();
 		}
-		Toast.makeText(getApplicationContext(), toastMsg, Toast.LENGTH_LONG).show();
 
 		// Close the Activity
 		startActivity(new Intent(getApplicationContext(),SurveyListActivity.class));

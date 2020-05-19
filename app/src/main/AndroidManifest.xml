@@ -175,6 +175,9 @@
         <activity android:name=".ui.coupon.NotificationActivity"></activity>
         <activity android:name=".ui.coupon.BarcodeActivity"></activity>
         <activity android:name=".ui.coupon.FullTextActivity"></activity>
+        <!--handle android 9.0 google map problem -->
+        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
+
     </application>
 
 </manifest>

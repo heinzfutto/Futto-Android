@@ -11,21 +11,17 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.os.PowerManager;
 import android.provider.Settings;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.auth.CognitoCachingCredentialsProvider;
 import com.amazonaws.mobile.auth.core.IdentityHandler;
@@ -34,29 +30,21 @@ import com.amazonaws.mobile.client.AWSMobileClient;
 import com.amazonaws.mobile.client.AWSStartupHandler;
 import com.amazonaws.mobile.client.AWSStartupResult;
 import com.amazonaws.mobile.config.AWSConfiguration;
-import com.amazonaws.mobileconnectors.dynamodbv2.document.Table;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBMapper;
 import com.amazonaws.regions.Regions;
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.muddzdev.styleabletoastlibrary.StyleableToast;
 
 import org.futto.app.BackgroundService.BackgroundServiceBinder;
-import org.futto.app.networking.HTTPUIAsync;
 import org.futto.app.networking.NetworkUtility;
-import org.futto.app.networking.PostRequest;
 import org.futto.app.nosql.NotificationDO;
 import org.futto.app.storage.EncryptionEngine;
 import org.futto.app.storage.PersistentData;
-import org.futto.app.survey.SurveyActivity;
 import org.futto.app.survey.SurveyListActivity;
 import org.futto.app.ui.coupon.NotificationActivity;
 import org.futto.app.ui.user.AboutActivityLoggedIn;
 import org.futto.app.ui.user.AboutActivityLoggedOut;
-import org.futto.app.ui.user.JobsActivity;
 import org.futto.app.ui.user.MapsActivity;
-
-import static org.futto.app.networking.PostRequest.addWebsitePrefix;
 
 /**
  * All Activities in the app extend this Activity.  It ensures that the app's key services (i.e.

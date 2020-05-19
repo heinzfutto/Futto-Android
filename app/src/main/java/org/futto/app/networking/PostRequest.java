@@ -438,7 +438,7 @@ public class PostRequest {
 		request.write("".getBytes());
 		request.flush();
 		request.close();
-
+		Log.i("UPLOAD MESSAGE: ",connection.getResponseMessage());
 		// Get HTTP Response. Pretty sure this blocks, nothing can really be done about that.
 		int response = connection.getResponseCode();
 		connection.disconnect();
@@ -488,8 +488,12 @@ public class PostRequest {
 				try {
 					file = new File(appContext.getFilesDir() + "/" + fileName);
 //				Log.d("uploading", "uploading " + file.getName());
-					if (PostRequest.doFileUpload(file, uploadUrl, stopTime) == 200) {
+					int response = PostRequest.doFileUpload(file, uploadUrl, stopTime);
+					if (response == 200) {
+						Log.i("UPLOAD DONE", "UPLOAD SUCCESS");
 						TextFileManager.delete(fileName);
+					}else if(response == 403){
+						Log.e("UPLOAD FAILED","UPLOAD FAILED WITH 403 "+fileName);
 					}
 				} catch (IOException e) {
 					Log.w("PostRequest.java", "Failed to upload file " + fileName + ". Raised exception: " + e.getCause());

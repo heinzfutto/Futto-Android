@@ -23,7 +23,7 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.support.v4.app.NotificationCompat;
+import androidx.core.app.NotificationCompat;
 import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -69,10 +69,9 @@ public class FuttoFirebaseMessageService extends FirebaseMessagingService {
         // The Futto server always sends just *data* messages, meaning that onMessageReceived when
         // the app is both in the foreground AND the background
 
-        Log.d(LOG_TAG, "From: " + remoteMessage.getFrom());
+//        Log.d(LOG_TAG, "From: " + remoteMessage.getFrom());
 
         // Check if message contains a data payload.
-
         Map<String, String> data = remoteMessage.getData();
 
         if (data.size() > 0) {

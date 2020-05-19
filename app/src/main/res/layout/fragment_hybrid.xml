@@ -32,11 +32,13 @@
 
     <TextView
         android:id="@+id/tvNone"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:layout_alignParentTop="true"
-        android:paddingTop="20dp"
+        android:layout_marginTop="20dp"
+        android:padding="2dp"
         android:layout_centerHorizontal="true"
-        android:text="No routes found" />
+        android:text="No routes found, try to use a more specific destination"/>
 
 </FrameLayout>

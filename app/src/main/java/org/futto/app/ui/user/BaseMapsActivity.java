@@ -5,18 +5,26 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.RequiresPermission;
-import android.support.v4.app.ActivityCompat;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresPermission;
+import androidx.core.app.ActivityCompat;
+
+import android.util.Log;
 import android.widget.Toast;
 
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.ui.PlaceAutocomplete;
+//import com.google.android.gms.location.places.Place;
+//import com.google.android.gms.location.places.ui.PlaceAutocomplete;
+//use latest google places api
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.AutocompleteActivity;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
+//import com.google.android.libraries.places.compat.*;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -31,6 +39,7 @@ import com.uber.sdk.android.core.auth.LoginManager;
 import org.futto.app.session.SessionActivity;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public abstract class BaseMapsActivity extends SessionActivity implements OnMapReadyCallback {
@@ -39,19 +48,22 @@ public abstract class BaseMapsActivity extends SessionActivity implements OnMapR
     GoogleMap mMap;
     Location userLocation;
     private FusedLocationProviderClient mFusedLocationClient;
-    public static final int PLACE_AUTOCOMPLETE_REQUEST_CODE = 100;
+    public static final int AUTOCOMPLETE_REQUEST_CODE = 1;
     private LatLng destination;
     private List<LatLng> listLatLng = new ArrayList<>();
     private Polyline blackPolyLine, greyPolyLine;
     private static final String CLIENT_ID = "b79PP-CdlzbQGAgDxWC78G19Gjif5Z89";
     private static final String TOKEN = "6L76yWHXVP1XZ_8wjQJ3EYKuTtP-vYHEmOs81WmE";
     private LoginManager loginManager;
+    private static final String GOOGLE_PLACES_API_KEY = "AIzaSyCPGkT_1i3FY3BZmTVBvbzjbptKVFTqFY8";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Places.initialize(getApplicationContext(), GOOGLE_PLACES_API_KEY);
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+//        Places.initialize(getApplicationContext(), apiKey);
     }
 
     /**
@@ -117,7 +129,6 @@ public abstract class BaseMapsActivity extends SessionActivity implements OnMapR
                 setSource(latLng);
             }
         });
-
         mMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener(){
             @Override
             public boolean onMyLocationButtonClick()
@@ -139,9 +150,17 @@ public abstract class BaseMapsActivity extends SessionActivity implements OnMapR
         this.listLatLng.clear();
 
         try {
-            Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN).build(this);
-            startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
-        } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
+            // Set the fields to specify which types of place data to
+            // return after the user has made a selection.
+            List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME,Place.Field.ADDRESS, Place.Field.LAT_LNG);
+            // Start the autocomplete intent.
+            Intent intent = new Autocomplete.IntentBuilder(
+                    AutocompleteActivityMode.FULLSCREEN, fields)
+                    .build(this);
+            // old version not support by Google
+//            Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN).build(this);
+            startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE);
+        } catch (Exception e) {
             // TODO: Handle the error.
         }
 
@@ -178,16 +197,18 @@ public abstract class BaseMapsActivity extends SessionActivity implements OnMapR
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_CODE) {
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-                Place place = PlaceAutocomplete.getPlace(this, data);
+                Place place = Autocomplete.getPlaceFromIntent(data);
+//                Toast.makeText(BaseMapsActivity.this, "ID: " + place.getId() + "address:" + place.getAddress() + "Name:" + place.getName() + " latlong: " + place.getLatLng(), Toast.LENGTH_LONG).show();
                 destination = place.getLatLng();
                 addMarker(destination);
                 setUpPolyLine(place);
 
-            } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
-                Status status = PlaceAutocomplete.getStatus(this, data);
+            } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
+                Status status = Autocomplete.getStatusFromIntent(data);
                 Toast.makeText(this, "Error " + status, Toast.LENGTH_SHORT).show();
 
             } else if (resultCode == RESULT_CANCELED) {

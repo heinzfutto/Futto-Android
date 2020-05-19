@@ -17,8 +17,7 @@ package org.futto.app.fcm;
 
 import android.util.Log;
 
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.FirebaseInstanceIdService;
+import com.google.firebase.messaging.FirebaseMessagingService;
 
 import org.futto.app.storage.PersistentData;
 
@@ -33,7 +32,7 @@ import javax.net.ssl.HttpsURLConnection;
 /**
  * Listens for changes in the InstanceID
  */
-public class FuttoFirebaseInstanceIdService extends FirebaseInstanceIdService {
+public class FuttoFirebaseInstanceIdService extends FirebaseMessagingService {
 
     private static String LOG_TAG = FuttoFirebaseInstanceIdService.class.getSimpleName();
 
@@ -43,10 +42,10 @@ public class FuttoFirebaseInstanceIdService extends FirebaseInstanceIdService {
      * is initially generated so this is where you would retrieve the token.
      */
     @Override
-    public void onTokenRefresh() {
+    public void onNewToken(String refreshedToken) {
+        super.onNewToken(refreshedToken);
         // Get updated InstanceID token.
         String username = null;
-        String refreshedToken = FirebaseInstanceId.getInstance().getToken();
         while (!PersistentData.isLoggedIn()) username = PersistentData.getPatientID();
         Log.d(LOG_TAG, "Refreshed token: " + refreshedToken);
 

@@ -3,6 +3,7 @@ package org.futto.app.survey;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,9 +14,9 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import org.futto.app.R;
 import org.futto.app.storage.PersistentData;
+import org.futto.app.ui.user.MainMenuActivity;
 
 import java.util.ArrayList;
 
@@ -25,7 +26,6 @@ import java.util.ArrayList;
 
 public class SurveySubmitFragment extends Fragment {
     OnSubmitButtonClickedListener submitButtonClickedListener;
-//    OnSubmitAnywayButtonClickedListener submitAnywayButtonClickedListener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -34,8 +34,8 @@ public class SurveySubmitFragment extends Fragment {
         FrameLayout submitScreenContent = (FrameLayout) surveySubmitLayout.findViewById(R.id.submitScreenContent);
         ArrayList<String> unansweredQuestions = getArguments().getStringArrayList("unansweredQuestions");
         if (unansweredQuestions.size() > 0) {
-            // If any questions haven't been answered, display the list of them with a "Submit Anyway" button
-            submitScreenContent.addView(showUnansweredQuestionsListAndTheSubmitButton(inflater, unansweredQuestions));
+            // If any questions haven't been answered, display the list of them and hide "Submit" button
+            submitScreenContent.addView(showUnansweredQuestionsListAndHideSubmitButton(inflater, unansweredQuestions));
         } else {
             // If all questions have been answered, just display the "Submit" button
             submitScreenContent.addView(showJustTheSubmitButton(inflater));
@@ -49,9 +49,13 @@ public class SurveySubmitFragment extends Fragment {
         void submitButtonClicked(String state);
     }
 
-    public interface OnSubmitAnywayButtonClickedListener{
-        void submitAnywayButtonClicked();
-    }
+//    public interface OnSubmitAnywayButtonClickedListener{
+//        void submitAnywayButtonClicked();
+//    }
+//
+//    public interface OnIncompleteButtonClickedListener{
+//        void submitAnywayButtonClicked();
+//    }
     @Override
     /** This function will get called on NEW versions of Android (6+). */
     public void onAttach(Context context) {
@@ -71,7 +75,7 @@ public class SurveySubmitFragment extends Fragment {
     }
 
 
-    private LinearLayout showUnansweredQuestionsListAndTheSubmitButton(LayoutInflater inflater,
+    private LinearLayout showUnansweredQuestionsListAndHideSubmitButton(LayoutInflater inflater,
                                                                        ArrayList<String> unansweredQuestions) {
         LinearLayout unansweredQuestionsLayout = (LinearLayout) inflater.inflate(R.layout.survey_unanswered_questions_list, null);
         // Show a message about the number of unanswered questions
@@ -90,8 +94,8 @@ public class SurveySubmitFragment extends Fragment {
             adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, unansweredQuestions);
         }
         unansweredQuestionsListView.setAdapter(adapter);
-        // Attach the submit button to the bottom of the list
-        LinearLayout submitButton = (LinearLayout) renderSubmitButton(inflater, "Submit Answers Anyway","incomplete");
+        // Hide subimt Button for imcomplete answer
+        LinearLayout submitButton = (LinearLayout) renderSubmitButton(inflater, "Submit Later","incomplete");
         unansweredQuestionsListView.addFooterView(submitButton);
         return unansweredQuestionsLayout;
     }
@@ -107,6 +111,7 @@ public class SurveySubmitFragment extends Fragment {
                 submitButtonClickedListener.submitButtonClicked(state);
             }
         });
+
         return submitButtonLayout;
     }
 

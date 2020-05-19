@@ -4,9 +4,9 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,7 +54,8 @@ import static com.google.android.gms.maps.model.JointType.ROUND;
  */
 public class TransitFragment extends Fragment implements OnMapReadyCallback {
 
-    private static String KEY = "AIzaSyDRJSnmycmwl9emHWdzBErbzUdT7rRGJa0";
+//    private static String KEY = "AIzaSyDRJSnmycmwl9emHWdzBErbzUdT7rRGJa0";
+    private static String KEY = "AIzaSyCPGkT_1i3FY3BZmTVBvbzjbptKVFTqFY8";
     private static String URL = "https://maps.googleapis.com/maps/api/directions/json?";
     private List<Routes> routes;
     private TransitAdapter adapter;

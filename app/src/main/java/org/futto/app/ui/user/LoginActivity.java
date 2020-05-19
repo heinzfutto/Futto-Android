@@ -1,20 +1,16 @@
 package org.futto.app.ui.user;
 
-import org.futto.app.BuildConfig;
 import org.futto.app.DeviceInfo;
 import org.futto.app.R;
 import org.futto.app.RunningBackgroundServiceActivity;
 import org.futto.app.networking.HTTPUIAsync;
 import org.futto.app.networking.PostRequest;
-import org.futto.app.networking.SurveyDownloader;
 import org.futto.app.storage.EncryptionEngine;
 import org.futto.app.storage.PersistentData;
 import org.futto.app.survey.TextFieldKeyboard;
 import org.futto.app.ui.registration.ConsentFormActivity;
-import org.futto.app.ui.registration.ForgotPasswordActivity;
 import org.futto.app.ui.registration.RegisterActivity;
 import org.futto.app.ui.registration.SecurityProblemActivity;
-import org.futto.app.ui.registration.UserIDForSecurityProblemActivity;
 import org.futto.app.ui.utils.AlertsManager;
 
 import android.app.Activity;
@@ -22,14 +18,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.HashMap;
-
-import okhttp3.Response;
 
 import static org.futto.app.networking.PostRequest.addWebsitePrefix;
 

@@ -4,18 +4,16 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.support.v7.widget.Toolbar;
-import android.telephony.TelephonyManager;
+import androidx.appcompat.widget.Toolbar;
+
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import org.futto.app.BuildConfig;
 import org.futto.app.DeviceInfo;
@@ -24,7 +22,6 @@ import org.futto.app.R;
 import org.futto.app.RunningBackgroundServiceActivity;
 import org.futto.app.networking.HTTPUIAsync;
 import org.futto.app.networking.PostRequest;
-import org.futto.app.storage.EncryptionEngine;
 import org.futto.app.storage.PersistentData;
 import org.futto.app.survey.TextFieldKeyboard;
 import org.futto.app.ui.utils.AlertsManager;

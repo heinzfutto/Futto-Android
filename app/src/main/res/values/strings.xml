@@ -46,7 +46,7 @@
     <string name="invalid_encryption_key">Received an invalid encryption key, please contact the a Futto administrator.</string>
     <string name="http_message_1">Someone misconfigured the server! Please contact research staff.</string>
     <string name="http_message_400">This device could not be registered under the provided patient ID; please contact research staff.</string>
-    <string name="http_message_403_during_registration">Sorry: either your Study URL, your User ID, or your Temporary Password is incorrect.</string>
+    <string name="http_message_403_during_registration">Sorry: either your User ID, or your Temporary Password is incorrect.</string>
     <string name="http_message_403_wrong_password">Sorry, your Current Password is incorrect.</string>
     <string name="http_message_403_wrong_password_forgot_password_page">Sorry, your Temporary Password is incorrect.</string>
     <string name="http_message_405">Sorry, this User ID already has a phone registered. Please contact the research staff and ask them to clear your registration so that you can register this new phone.</string>

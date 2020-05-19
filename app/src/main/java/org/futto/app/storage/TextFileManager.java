@@ -339,6 +339,18 @@ public class TextFileManager {
 		files.remove(TextFileManager.getSurveyTimingsFile().fileName);
 		files.remove(TextFileManager.getWifiLogFile().fileName);
 
+
+		// remove files that created by the app to avoid uploading error
+		files.remove("ZoomTables.data");
+		files.remove("DATA_disk_creation_time_its");
+		files.remove("DATA_disk_creation_time_its_ter");
+		files.remove("DATA_disk_creation_time_vts_inaka_org.futto.app_default");
+		files.remove("DATA_disk_creation_time_vts_no_pois_org.futto.app_default");
+		files.remove("DATA_disk_creation_time_vts_org.futto.app_default");
+		files.remove("DATA_disk_creation_time_vts_labl_org.futto.app_default");
+		files.remove("DATA_ServerControlledParametersManager.data.org.futto.app");
+		files.remove("_m_t");
+
 		return files.toArray(new String[files.size()]);
 	}
 	

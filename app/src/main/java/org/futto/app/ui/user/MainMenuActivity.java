@@ -1,15 +1,11 @@
 package org.futto.app.ui.user;
 
-import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.Toolbar;
+
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
-import android.view.MenuItem;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.amazonaws.auth.CognitoCachingCredentialsProvider;
@@ -18,14 +14,9 @@ import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBMapper;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBQueryExpression;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.muddzdev.styleabletoastlibrary.StyleableToast;
 
 import org.futto.app.R;
-import org.futto.app.fcm.FuttoFirebaseMessageService;
 import org.futto.app.networking.NetworkUtility;
-import org.futto.app.networking.SettingUpdate;
-import org.futto.app.networking.SurveyDownloader;
 import org.futto.app.nosql.NotificationDO;
 import org.futto.app.session.SessionActivity;
 import org.futto.app.storage.PersistentData;

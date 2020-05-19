@@ -1,25 +1,20 @@
 package org.futto.app.survey;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.widget.AdapterView;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 
 import org.futto.app.R;
 import org.futto.app.session.SessionActivity;
 import org.futto.app.storage.PersistentData;
 import org.futto.app.ui.adapters.SurveyAdapter;
+import org.futto.app.ui.user.MainMenuActivity;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class SurveyListActivity extends SessionActivity {
 
@@ -54,6 +49,15 @@ public class SurveyListActivity extends SessionActivity {
         surveyAdapter = new SurveyAdapter(surveyId,surveyState,this);
         displayToobar();
         listView.setAdapter(surveyAdapter);
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+        startActivity(new Intent(this, MainMenuActivity.class));
+        finish();
+
     }
 
     private void displayToobar() {
