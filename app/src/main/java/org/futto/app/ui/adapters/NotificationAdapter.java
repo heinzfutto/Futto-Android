@@ -2,7 +2,6 @@ package org.futto.app.ui.adapters;
 
 
 import android.content.Context;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +13,8 @@ import org.futto.app.nosql.NotificationDO;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 
 /**
@@ -61,7 +62,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         LayoutInflater inflater = LayoutInflater.from(context);
 
         // Inflate the custom layout
-        View contactView = inflater.inflate(R.layout.notification_item, parent, false);
+        View contactView = inflater.inflate(R.layout.noti_item, parent, false);
 
         // Return a new holder instance
         ViewHolder viewHolder = new ViewHolder(contactView);

@@ -67,8 +67,8 @@ public class RegisterActivity extends RunningBackgroundServiceActivity {
 		textFieldKeyboard.makeKeyboardBehave(newPasswordInput);
 		textFieldKeyboard.makeKeyboardBehave(confirmNewPasswordInput);
 
-		newPasswordInput.setHint(String.format(getString(R.string.registration_replacement_password_hint), PersistentData.minPasswordLength()));
-		confirmNewPasswordInput.setHint(String.format(getString(R.string.registration_replacement_password_hint), PersistentData.minPasswordLength()));
+//		newPasswordInput.setHint(String.format(getString(R.string.registration_new_password_hint), PersistentData.minPasswordLength()));
+//		confirmNewPasswordInput.setHint(String.format(getString(R.string.registration_confirm_new_password_hint), PersistentData.minPasswordLength()));
 		displayToobar();
 	}
 

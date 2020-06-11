@@ -68,7 +68,7 @@
     <string name="title_activity_register">Register</string>
     <string name="title_activity_login">Log In</string>
     <string name="title_activity_login_string">Log In</string>
-    <string name="login_activity_welcoming_message">Welcome Back </string>
+    <string name="login_activity_welcoming_message">Welcome </string>
     <string name="user_id_system_mismatch">User ID does not match the one in the system. Try again</string>
     <string name="password_system_mismatch">Incorrect user ID and password combination</string>
 
@@ -221,6 +221,15 @@
     <string name="searchJob">Find Job</string>
     <string name="noti_str">You don\'t have new message now.</string>
     <string name="futto_sub_menu_str">Welcome Futto Menu</string>
+    <string name="title_activity_entry">EntryActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
 
 </resources>

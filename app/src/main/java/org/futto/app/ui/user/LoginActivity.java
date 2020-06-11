@@ -1,5 +1,14 @@
 package org.futto.app.ui.user;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
+
 import org.futto.app.DeviceInfo;
 import org.futto.app.R;
 import org.futto.app.RunningBackgroundServiceActivity;
@@ -13,17 +22,9 @@ import org.futto.app.ui.registration.RegisterActivity;
 import org.futto.app.ui.registration.SecurityProblemActivity;
 import org.futto.app.ui.utils.AlertsManager;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
-import android.os.Bundle;
-import androidx.appcompat.widget.Toolbar;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.Toast;
-
 import java.util.HashMap;
+
+import androidx.appcompat.widget.Toolbar;
 
 import static org.futto.app.networking.PostRequest.addWebsitePrefix;
 
@@ -173,7 +174,11 @@ public class LoginActivity extends RunningBackgroundServiceActivity {
 
 	@Override
 	/** LoginActivity needs to suppress use of the back button, otherwise it would log the user in without a password. */
-	public void onBackPressed() { }
+	public void onBackPressed() {
+		//can only start from entry activity if press the back button
+		Intent intent = new Intent(LoginActivity.this, EntryActivity.class);
+		startActivity(intent);
+	}
 
 	public void getSecurityProblemAndAnswer(final Activity currentActivity,String userid) {
 		String url = "http://consent.findyourdreamjob.org//getsecuritydetails";

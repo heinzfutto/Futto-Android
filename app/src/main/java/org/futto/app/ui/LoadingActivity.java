@@ -14,8 +14,7 @@ import org.futto.app.R;
 import org.futto.app.RunningBackgroundServiceActivity;
 import org.futto.app.storage.EncryptionEngine;
 import org.futto.app.storage.PersistentData;
-import org.futto.app.ui.registration.RegisterActivity;
-import org.futto.app.ui.user.LoginActivity;
+import org.futto.app.ui.user.EntryActivity;
 import org.futto.app.ui.user.MainMenuActivity;
 import org.futto.app.ui.utils.AlertsManager;
 
@@ -23,8 +22,8 @@ import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 
 import io.sentry.Sentry;
-import io.sentry.dsn.InvalidDsnException;
 import io.sentry.android.AndroidSentryClientFactory;
+import io.sentry.dsn.InvalidDsnException;
 
 /**The LoadingActivity is a temporary RunningBackgroundServiceActivity (Not a SessionActivity,
  * check out those classes if you are confused) that pops up when the user opens the app.
@@ -112,7 +111,7 @@ public class LoadingActivity extends RunningBackgroundServiceActivity {
 	/**CHecks whether device is registered, sends user to the correct screen. */
 	private void loadingSequence() {
 		//if the device is not registered, push the user to the register activity
-		if ( !PersistentData.isRegistered() ){ startActivity(new Intent(this, LoginActivity.class) ); }
+		if ( !PersistentData.isRegistered() ){ startActivity(new Intent(this, EntryActivity.class) ); }
 		//if device is registered push user to the main menu.
 		else {
 			if (BuildConfig.APP_IS_BETA) {

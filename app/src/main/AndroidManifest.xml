@@ -1,43 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.futto.app">
-
     <!-- GPS and network-location service -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
-    <!-- voice recording -->
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <!-- network and upload -->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <!-- starting the background service at boot. -->
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <!-- bluetooth proximity -->
-    <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-    <!-- <uses-permission android:name="android.permission.BLUETOOTH_PRIVILEGED" /> -->
-    <!-- get own phone number -->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-
-    <!--call phone -->
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
-    <!-- Permission used in android 6+ for being whitelisted for app standby -->
-    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
-    <!-- as of the android 6 compatibility update, Beiwe no longer supports installation onto external media -->
-    <!-- <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> -->
-    <!-- Power management and monitoring, not sure where this would be used... -->
-    <uses-permission android:name="android.permission.BATTERY_STATS" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="${appName}${appNameSuffix}"
         android:theme="@style/AppTheme">
-
+        <activity
+            android:name=".ui.user.EntryActivity"
+            android:label="@string/title_activity_entry"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -46,12 +19,6 @@
              sign the APK for publishing.
              You can define the keys for the debug and release targets in src/debug/ and src/release/.
         -->
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
-
-        <!-- ACTIVITIES -->
-
         <activity
             android:name=".ui.LoadingActivity"
             android:label="${appName}${appNameSuffix}">
@@ -60,7 +27,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
+        </activity> <!-- ACTIVITIES -->
         <activity
             android:name=".survey.AudioRecorderActivity"
             android:label="@string/title_activity_audio_recorder"
@@ -73,8 +40,9 @@
             android:name=".survey.SurveyActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_survey" />
-        <activity android:name=".survey.SurveyListActivity"
-            android:label="Survey"/>
+        <activity
+            android:name=".survey.SurveyListActivity"
+            android:label="Survey" />
         <activity
             android:name=".ui.DebugInterfaceActivity"
             android:label="@string/title_activity_debug_interface" />
@@ -93,38 +61,12 @@
         <activity
             android:name=".ui.user.GraphActivity"
             android:label="@string/title_activity_graph" />
-
-
-        <!-- SERVICE -->
-
-        <service
-            android:name=".BackgroundService"
-            android:exported="false"
-            android:label="BackgroundService-thing" />
-
-        <!-- RECEIVERS -->
-
-        <receiver android:name=".listeners.BootListener">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
-        <receiver android:name=".listeners.BluetoothListener" />
-        <receiver android:name=".listeners.PowerStateListener">
-            <intent-filter>
-                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
-                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
-                <action android:name="android.intent.action.ACTION_SHUTDOWN" />
-                <action android:name="android.intent.action.ACTION_REBOOT" />
-                <action android:name="android.intent.action.AIRPLANE_MODE" />
-            </intent-filter>
-        </receiver>
         <activity
             android:name=".ui.registration.UserIDForSecurityProblemActivity"
-            android:label="User ID For Security Problem" />
+            android:label="User ID For Security Problem" /> <!-- SERVICE -->
         <activity
             android:name=".ui.registration.ResetPasswordActivity"
-            android:label="@string/title_activity_reset_password" />
+            android:label="@string/title_activity_reset_password" /> <!-- RECEIVERS -->
         <activity
             android:name=".ui.registration.SecurityProblemActivity"
             android:label="Security Problem" />
@@ -134,6 +76,7 @@
         <activity
             android:name=".ui.user.AboutActivityLoggedIn"
             android:label="@string/title_activity_about" />
+
         <activity
             android:name=".ui.registration.PhoneNumberEntryActivity"
             android:label="@string/title_activity_phone_number_entry" />
@@ -158,26 +101,66 @@
                     android:scheme="org.beiwe.app" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.user.JobsActivity" />
+        <activity android:name=".ui.coupon.NotificationActivity" />
+        <activity android:name=".ui.coupon.BarcodeActivity" />
+        <activity android:name=".ui.coupon.FullTextActivity" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
 
+        <receiver android:name=".listeners.BootListener">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver> <!-- Service listening for any incoming messages -->
+        <receiver android:name=".listeners.BluetoothListener" />
+
+        <receiver android:name=".listeners.PowerStateListener">
+            <intent-filter>
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+                <action android:name="android.intent.action.ACTION_SHUTDOWN" />
+                <action android:name="android.intent.action.ACTION_REBOOT" />
+                <action android:name="android.intent.action.AIRPLANE_MODE" />
+            </intent-filter>
+        </receiver>
+        <service
+            android:name=".BackgroundService"
+            android:exported="false"
+            android:label="BackgroundService-thing" />
         <service android:name=".fcm.FuttoFirebaseInstanceIdService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-        <!-- Service listening for any incoming messages -->
         <service android:name=".fcm.FuttoFirebaseMessageService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
-        </service>
-
-        <activity android:name=".ui.user.JobsActivity" />
-        <activity android:name=".ui.coupon.NotificationActivity"></activity>
-        <activity android:name=".ui.coupon.BarcodeActivity"></activity>
-        <activity android:name=".ui.coupon.FullTextActivity"></activity>
-        <!--handle android 9.0 google map problem -->
-        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
-
+        </service> <!-- handle android 9.0 google map problem -->
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
     </application>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- voice recording -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- network and upload -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- starting the background service at boot. -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- bluetooth proximity -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.BLUETOOTH" /> <!-- <uses-permission android:name="android.permission.BLUETOOTH_PRIVILEGED" /> -->
+    <!-- get own phone number -->
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" /> <!-- call phone -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- Permission used in android 6+ for being whitelisted for app standby -->
+    <uses-permission android:name="android.permission.CALL_PHONE" /> <!-- as of the android 6 compatibility update, Beiwe no longer supports installation onto external media -->
+    <!-- <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> -->
+    <!-- Power management and monitoring, not sure where this would be used... -->
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+    <uses-permission android:name="android.permission.BATTERY_STATS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 </manifest>
