@@ -1,7 +1,6 @@
 package org.futto.app.networking;
 
 import android.content.Context;
-import android.icu.text.IDNA;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -23,9 +22,7 @@ import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
@@ -484,6 +481,7 @@ public class PostRequest {
 				return;
 			}
 
+			int uploadFailedCount = 0;
 			for (String fileName : TextFileManager.getAllUploadableFiles()) {
 				try {
 					file = new File(appContext.getFilesDir() + "/" + fileName);
@@ -491,8 +489,10 @@ public class PostRequest {
 					int response = PostRequest.doFileUpload(file, uploadUrl, stopTime);
 					if (response == 200) {
 						Log.i("UPLOAD DONE", "UPLOAD SUCCESS");
+						uploadFailedCount = 0; //reset the failure count when upload success
 						TextFileManager.delete(fileName);
 					}else if(response == 403){
+						uploadFailedCount += 1;
 						Log.e("UPLOAD FAILED","UPLOAD FAILED WITH 403 "+fileName);
 					}
 				} catch (IOException e) {
@@ -504,6 +504,11 @@ public class PostRequest {
                     TextFileManager.getDebugLogFile().writeEncrypted(System.currentTimeMillis()+" upload time limit of 1 hr reached, there are likely files still on the phone that have not been uploaded." );
 					CrashHandler.writeCrashlog(new Exception("Upload took longer than 1 hour"), appContext);
                     return;
+				}
+
+				if (uploadFailedCount >= 5) {
+					Log.e("doUploadAllFiles failed", "upload failed for consecutive 5 times, stop uploading files.");
+					return;
 				}
 			}
 			Log.i("DOING UPLOAD STUFF", "DONE WITH UPLOAD");

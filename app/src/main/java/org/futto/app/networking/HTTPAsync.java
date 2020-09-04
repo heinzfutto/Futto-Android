@@ -44,6 +44,8 @@ public class HTTPAsync extends AsyncTask<Void, Void, Void> {
 		if (responseCode == -1 ) {
 			Log.w("HTTPAsync", "WARNING: the responseCode was never set; HTTPAsync is unable check validity.");
 		} else if (responseCode != 200) {
+			Log.e("HTTPAsync", "url: " + url);
+			Log.e("HTTPAsync", "param: " + parameters);
 			Log.e("HTTPAsync", "Received HTTP response code " + responseCode);
 		}
 	}
