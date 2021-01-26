@@ -109,18 +109,22 @@ public class SurveyDownloader {
 //				Log.d("debugging survey update", "A is incoming, B is current.");
 //				Log.d("debugging survey update", "A) " + jsonTimingsString);
 //				Log.d("debugging survey update", "B) " + PersistentData.getSurveyTimes(surveyId) );
-				if ( ! PersistentData.getSurveyTimes(surveyId).equals(jsonTimingsString) ) {
-//					Log.i("SurveyDownloader.java", "The survey times, they are a changin!");
-					BackgroundService.cancelSurveyAlarm(surveyId);
-					PersistentData.setSurveyTimes(surveyId, jsonTimingsString);
-					SurveyScheduler.scheduleSurvey(surveyId);
-				}
+//				if ( ! PersistentData.getSurveyTimes(surveyId).equals(jsonTimingsString) ) {
+////					Log.i("SurveyDownloader.java", "The survey times, they are a changin!");
+//					BackgroundService.cancelSurveyAlarm(surveyId);
+//					PersistentData.setSurveyTimes(surveyId, jsonTimingsString);
+//					SurveyScheduler.scheduleSurvey(surveyId);
+//				}
+//				if ( PersistentData.getSurveyNotificationState(surveyId)) {
+//					PersistentData.setSurveyNotificationState(surveyId, true);
+//				}
 				newSurveyIds.add(surveyId);
 			}
 			else { //if survey is new, create new survey entry.
 				// Log.d("debugging survey update", "CREATE A SURVEY");
 				PersistentData.addSurveyId(surveyId);
 				PersistentData.createSurveyData(surveyId, jsonQuestionsString, jsonTimingsString, surveyType, jsonSettingsString);
+				PersistentData.setSurveyNotificationState(surveyId, true);
 				BackgroundService.registerTimers(appContext); // We need to register the surveyId before we can schedule it
 				SurveyScheduler.scheduleSurvey(surveyId);
 				SurveyScheduler.checkImmediateTriggerSurvey(appContext, surveyId);

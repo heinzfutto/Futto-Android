@@ -1,4 +1,5 @@
 package org.futto.app.storage;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -10,7 +11,10 @@ import org.futto.app.R;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**A class for managing patient login sessions.
  * Uses SharedPreferences in order to save username-password combinations.
@@ -435,6 +439,67 @@ public class PersistentData {
 
 	public static void clearSurveyQuestionMemory(String surveyId) {
 		editor.putString(surveyId + "-questionIds", new JSONArray().toString() );
+		editor.commit();
+	}
+
+	/*###########################################################################################
+	###################################### User Log ##########################################
+	###########################################################################################*/
+
+	public static List<String> getDownloadedSurveys() {
+		return getSurveyIds();
+	}
+
+	public static List<String> getUserLog(String key) {
+		Set<String> set = pref.getStringSet(key, new HashSet<String>());
+		List<String> list = new ArrayList<>(set);
+		return list;
+	}
+
+	public static void addUserLog(String key, String value) {
+		Set<String> set = pref.getStringSet(key, new HashSet<String>());
+		set.add(value);
+		editor.putStringSet(key, set);
+		editor.commit();
+	}
+
+	public static void setDBLog(String key, String value) {
+		editor.putString(key, value);
+		editor.commit();
+	}
+
+	public static String getDBLog(String key) {
+		String s = pref.getString(key, "");
+		return s;
+	}
+
+	public static void setWifiConnection(Boolean bool) {
+		editor.putBoolean("Wifi-connection", bool);
+		editor.commit();
+	}
+
+	public static Boolean getWifiConnection() {
+		Boolean bool = pref.getBoolean("Wifi-connection", false);
+		return bool;
+	}
+
+	public static void clearUserlog() {
+		editor.remove("survey-read");
+		editor.remove("survey-submit");
+		editor.remove("survey-incomplete");
+		editor.remove("user-upload-failed");
+		editor.remove( "wifi-on");
+		editor.remove( "wifi-off");
+		editor.remove( "gps-on");
+		editor.remove( "gps-off");
+		editor.remove( "user-login");
+		editor.remove("user-logout");
+		editor.commit();
+	}
+
+	public static void clearDBlog() {
+		editor.remove("gps-status");
+		editor.remove("wifi-status");
 		editor.commit();
 	}
 }

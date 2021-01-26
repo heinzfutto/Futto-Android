@@ -36,7 +36,7 @@ import static org.futto.app.networking.PostRequest.addWebsitePrefix;
  * @authors Dor Samet, Eli Jones */
 public class LoginActivity extends RunningBackgroundServiceActivity {	
 	private EditText password;
-	private EditText userID;
+//	private EditText userID;
 	private Context appContext;
 	private Toolbar toolbar;
 	@Override
@@ -48,7 +48,7 @@ public class LoginActivity extends RunningBackgroundServiceActivity {
 
 		setContentView(R.layout.activity_login);
 		password = (EditText) findViewById(R.id.editText2);
-		userID = (EditText) findViewById(R.id.usernameText);
+//		userID = (EditText) findViewById(R.id.usernameText);
 		TextFieldKeyboard textFieldKeyboard = new TextFieldKeyboard(appContext);
 		textFieldKeyboard.makeKeyboardBehave(password);
 		displayToobar();
@@ -112,7 +112,8 @@ public class LoginActivity extends RunningBackgroundServiceActivity {
 		}else {
 			// Log.d("RegisterActivity", "trying \"" + LoginManager.getPatientID() + "\" with password \"" + LoginManager.getPassword() + "\"" );
 			PersistentData.setServerUrl("https://test.findyourdreamjob.org/");
-			tryToLoginInWithTheServer(this, addWebsitePrefix(getApplicationContext().getString(R.string.login_url)), userID.getText().toString(),password.getText().toString());
+//			tryToLoginInWithTheServer(this, addWebsitePrefix(getApplicationContext().getString(R.string.login_url)), userID.getText().toString(),password.getText().toString());
+			tryToLoginInWithTheServer(this, addWebsitePrefix(getApplicationContext().getString(R.string.login_url)), PersistentData.getPatientID(),password.getText().toString());
 		}
 	}
 
@@ -139,6 +140,7 @@ public class LoginActivity extends RunningBackgroundServiceActivity {
 					PersistentData.setLoginCredentials(userid,password);
 //					AlertsManager.showAlert(responseCode, currentActivity.getString(R.string.couldnt_register), currentActivity);
   				    activity.startActivity(new Intent(activity.getApplicationContext(), ConsentFormActivity.class) );
+  				    PersistentData.addUserLog("user-login", "" + System.currentTimeMillis());
 					activity.finish();
 				} else {
 					AlertsManager.showAlert(responseCode, "Incorrect password or userid", currentActivity);

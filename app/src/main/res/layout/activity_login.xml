@@ -52,24 +52,24 @@
             android:layout_height="40dp"
             android:background="@android:color/transparent" />
 
-        <EditText
-            android:id="@+id/usernameText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:height="120dp"
-            android:autofillHints="@font/roboto_bold"
-            android:background="@drawable/rounded_corner"
-            android:fontFamily="@font/roboto_medium"
-            android:hint="Enter your User ID"
-            android:inputType="textPersonName"
-            android:padding="16dp"
-            android:textColor="#ffffff"
-            android:textScaleX="1.2">
-                <requestFocus />
-        </EditText>
+<!--        <EditText-->
+<!--            android:id="@+id/usernameText"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:layout_marginLeft="15dp"-->
+<!--            android:layout_marginRight="15dp"-->
+<!--            android:height="120dp"-->
+<!--            android:autofillHints="@font/roboto_bold"-->
+<!--            android:background="@drawable/rounded_corner"-->
+<!--            android:fontFamily="@font/roboto_medium"-->
+<!--            android:hint="Enter your User ID"-->
+<!--            android:inputType="textPersonName"-->
+<!--            android:padding="16dp"-->
+<!--            android:textColor="#ffffff"-->
+<!--            android:textScaleX="1.2">-->
+<!--                <requestFocus />-->
+<!--        </EditText>-->
 
 
         <EditText

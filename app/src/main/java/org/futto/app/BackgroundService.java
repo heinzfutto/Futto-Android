@@ -19,6 +19,7 @@ import android.util.Log;
 import org.futto.app.listeners.GPSListener;
 import org.futto.app.listeners.PowerStateListener;
 import org.futto.app.listeners.WifiListener;
+import org.futto.app.networking.NetworkUtility;
 import org.futto.app.networking.PostRequest;
 import org.futto.app.networking.SettingUpdate;
 import org.futto.app.networking.SurveyDownloader;
@@ -126,6 +127,8 @@ public class BackgroundService extends Service {
 		filter.addAction( appContext.getString( R.string.signout_intent ) );
 		filter.addAction( appContext.getString( R.string.run_wifi_log ) );
 		filter.addAction( appContext.getString( R.string.upload_data_files_intent ) );
+		filter.addAction( appContext.getString(R.string.upload_user_log_intent));
+		filter.addAction(appContext.getString(R.string.upload_db_log_intent));
 		filter.addAction( appContext.getString( R.string.create_new_data_files_intent ) );
 		filter.addAction( appContext.getString( R.string.check_for_new_surveys_intent ) );
 		filter.addAction("crashBeiwe");
@@ -154,11 +157,24 @@ public class BackgroundService extends Service {
 
         // Functionality timers. We don't need aggressive checking for if these timers have been missed, as long as they run eventually it is fine.
         if (!timer.alarmIsSet(Timer.uploadDatafilesIntent)) { timer.setupExactSingleAlarm(PersistentData.getUploadDataFilesFrequencyMilliseconds(), Timer.uploadDatafilesIntent); }
+        if (!timer.alarmIsSet(Timer.uploadUserLogIntent)) {
+            timer.setupExactSingleAlarm(Long.valueOf(43200000), Timer.uploadUserLogIntent);
+            Log.i("user-log", "userlog upload alarm set.");
+        }
+        if (!timer.alarmIsSet(Timer.uploadDBLogIntent)) {
+            timer.setupExactSingleAlarm(Long.valueOf(43200000), Timer.uploadDBLogIntent);
+//            timer.setupExactSingleAlarm(Long.valueOf(60000), Timer.uploadDBLogIntent);
+            Log.i("db-log", "dblog upload alarm set.");
+        }
+
         if (!timer.alarmIsSet(Timer.createNewDataFilesIntent)) { timer.setupExactSingleAlarm(PersistentData.getCreateNewDataFilesFrequencyMilliseconds(), Timer.createNewDataFilesIntent); }
         if (!timer.alarmIsSet(Timer.checkForNewSurveysIntent)) { timer.setupExactSingleAlarm(PersistentData.getCheckForNewSurveysFrequencyMilliseconds(), Timer.checkForNewSurveysIntent); }
 
         //checks for the current expected state for survey notifications,
+        Log.d("Background Service", PersistentData.getSurveyIds().toString());
         for (String surveyId : PersistentData.getSurveyIds() ){
+            Log.d("background service", "surveyId" + surveyId);
+//            sendBroadcast(Timer.checkForNewSurveysIntent);
             if ( PersistentData.getSurveyNotificationState(surveyId) || PersistentData.getMostRecentSurveyAlarmTime(surveyId) < now ) {
                 //if survey notification should be active or the most recent alarm time is in the past, trigger the notification.
                 SurveyNotifications.displaySurveyNotification(appContext, surveyId); } }
@@ -202,7 +218,7 @@ public class BackgroundService extends Service {
 	 * action requires a fairly expensive dive into PersistantData JSON unpacking.*/
     private BroadcastReceiver timerReceiver = new BroadcastReceiver() {
         @Override public void onReceive(Context appContext, Intent intent) {
-            Log.d("BackgroundService - timers", "Received broadcast: " + intent.toString() );
+            Log.d("BackgroundService", "Received broadcast: " + intent.toString() );
             TextFileManager.getDebugLogFile().writeEncrypted(System.currentTimeMillis() + " Received Broadcast: " + intent.toString() );
             String broadcastAction = intent.getAction();
 
@@ -213,26 +229,54 @@ public class BackgroundService extends Service {
             /** Disable active sensor */
 
             if (broadcastAction.equals( appContext.getString(R.string.turn_gps_off) ) ) {
-                if ( PermissionHandler.checkGpsPermissions(appContext) ) { gpsListener.turn_off(); }
+                if ( PermissionHandler.checkGpsPermissions(appContext) ) {
+                    gpsListener.turn_off();
+                    PersistentData.addUserLog("gps-off", "GPS turned off. TimeStamp: " + System.currentTimeMillis());
+//                    PersistentData.setDBLog("gps-status", "off");
+                }
+//                    Log.i("db-log", "gps-status off");
                 return; }
 
             /** Enable active sensors, reset timers. */
 
             //GPS. Almost identical logic to accelerometer above.
             if (broadcastAction.equals( appContext.getString(R.string.turn_gps_on) ) ) {
-                if ( !PersistentData.getGpsEnabled() ) { Log.e("BackgroundService Listener", "invalid GPS on received"); return; }
+                if ( !PersistentData.getGpsEnabled() ) {
+                    Log.e("BackgroundService", "invalid GPS on received");
+                    PersistentData.addUserLog("gps-off", "invalid GPS on received. TimeStamp: " + System.currentTimeMillis());
+                    PersistentData.setDBLog("gps-status", "off, reason: invalid GPS on received");
+                    return;
+                }
                 gpsListener.turn_on();
+                PersistentData.addUserLog("gps-on", "GPS turned on. TimeStamp: " + System.currentTimeMillis());
+                PersistentData.setDBLog("gps-status", "on");
+                Log.i("db-log", "gps-status on");
+                Log.i("user-log", "gps turned on, TimeStamp: " + System.currentTimeMillis());
                 timer.setupExactSingleAlarm(PersistentData.getGpsOnDurationMilliseconds(), Timer.gpsOffIntent);
                 long alarmTime = timer.setupExactSingleAlarm(PersistentData.getGpsOnDurationMilliseconds() + PersistentData.getGpsOffDurationMilliseconds(), Timer.gpsOnIntent);
                 PersistentData.setMostRecentAlarmTime(getString(R.string.turn_gps_on), alarmTime );
                 return; }
             //run a wifi scan.  Most similar to GPS, but without an off-timer.
             if (broadcastAction.equals( appContext.getString(R.string.run_wifi_log) ) ) {
-                if ( !PersistentData.getWifiEnabled() ) { Log.e("BackgroundService Listener", "invalid WiFi scan received"); return; }
+                if ( !PersistentData.getWifiEnabled() ) {
+                    Log.e("BackgroundService", "invalid WiFi scan received");
+                    PersistentData.setDBLog("wifi-status", "off");
+                    return;
+                }
                 if ( PermissionHandler.checkWifiPermissions(appContext) ) { WifiListener.scanWifi(); }
                 else { TextFileManager.getDebugLogFile().writeEncrypted(System.currentTimeMillis() + " user has not provided permission for Wifi."); }
                 long alarmTime = timer.setupExactSingleAlarm(PersistentData.getWifiLogFrequencyMilliseconds(), Timer.wifiLogIntent);
                 PersistentData.setMostRecentAlarmTime( getString(R.string.run_wifi_log), alarmTime );
+                if (!NetworkUtility.networkIsAvailable(appContext)) {
+                    PersistentData.addUserLog("wifi-off", "" + System.currentTimeMillis());
+                    PersistentData.setDBLog("wifi-status", "off");
+                    Log.i("db-log", "wifi-status off");
+                } else {
+                    PersistentData.addUserLog("wifi-on", "" + System.currentTimeMillis());
+                    PersistentData.setDBLog("wifi-status", "on");
+                    Log.i("db-log", "wifi-status on");
+
+                }
                 return; }
 
             /** Bluetooth timers are unlike GPS and Accelerometer because it uses an absolute-point-in-time as a trigger, and therefore we don't need to store most-recent-timer state.
@@ -244,6 +288,24 @@ public class BackgroundService extends Service {
                 PostRequest.uploadAllFiles();
                 timer.setupExactSingleAlarm(PersistentData.getUploadDataFilesFrequencyMilliseconds(), Timer.uploadDatafilesIntent);
                 return; }
+
+            // starts a log upload attempt
+            if (broadcastAction.equals( appContext.getString(R.string.upload_user_log_intent) ) ) {
+                Log.d("user-log", "broadcast upload user log intent");
+                PostRequest.uploadUserLog();
+                timer.setupExactSingleAlarm(Long.valueOf(21600000), Timer.uploadUserLogIntent);
+//                timer.setupExactSingleAlarm(Long.valueOf(60000), Timer.uploadUserLogIntent);
+                return; }
+
+            // starts a db log upload attempt
+            if (broadcastAction.equals( appContext.getString(R.string.upload_db_log_intent) ) ) {
+                Log.d("db-log", "broadcast upload db log intent");
+                PostRequest.uploadDBLog();
+                timer.setupExactSingleAlarm(Long.valueOf(86400000), Timer.uploadDBLogIntent);
+//                timer.setupExactSingleAlarm(Long.valueOf(300000), Timer.uploadDBLogIntent);
+                return; }
+
+
             //creates new data files
             if (broadcastAction.equals( appContext.getString(R.string.create_new_data_files_intent) ) ) {
                 TextFileManager.makeNewFilesForEverything();
@@ -254,6 +316,7 @@ public class BackgroundService extends Service {
             //Downloads the most recent survey questions and schedules the surveys.
             if (broadcastAction.equals( appContext.getString(R.string.check_for_new_surveys_intent))) {
                 SurveyDownloader.downloadSurveys( getApplicationContext() );
+                Log.d("background service", "downlaod the most recent data.");
                 timer.setupExactSingleAlarm(PersistentData.getCheckForNewSurveysFrequencyMilliseconds(), Timer.checkForNewSurveysIntent);
                 return; }
 

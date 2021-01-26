@@ -11,7 +11,6 @@ import org.futto.app.RunningBackgroundServiceActivity;
 import org.futto.app.storage.PersistentData;
 import org.futto.app.ui.registration.ResetPasswordActivity;
 import org.futto.app.ui.user.AboutActivityLoggedIn;
-import org.futto.app.ui.user.GraphActivity;
 import org.futto.app.ui.user.LoginActivity;
 
 /**All Activities in the app WHICH REQUIRE THE USER TO BE LOGGED IN extend this Activity.
@@ -70,6 +69,7 @@ public class SessionActivity extends RunningBackgroundServiceActivity {
 	/** Display the LoginActivity, and invalidate the login in SharedPreferences */
 	protected void logoutUser() {
 		PersistentData.logout();
+		PersistentData.addUserLog("user-logout", "" + System.currentTimeMillis());
 		startActivity(new Intent(this, LoginActivity.class));
 	}
 	

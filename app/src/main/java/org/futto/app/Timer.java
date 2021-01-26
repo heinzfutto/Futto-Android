@@ -1,15 +1,13 @@
 package org.futto.app;
 
-import java.util.Calendar;
-
-import org.futto.app.storage.PersistentData;
-
-
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
+
+import org.futto.app.storage.PersistentData;
+
+import java.util.Calendar;
 
 /** The Timer class provides a meeans of setting various timers.  These are used by the BackgroundService
  * for devices that must be turned on/off, and timing the user to automatically logout after a period of time.
@@ -38,6 +36,8 @@ public class Timer {
 	public static Intent createNewDataFilesIntent;
 	public static Intent checkForNewSurveysIntent;
 	public static Intent checkForNewSetting;
+	public static Intent uploadUserLogIntent;
+	public static Intent uploadDBLogIntent;
 
 	// Constructor
 	public Timer( BackgroundService backgroundService ) {
@@ -59,6 +59,9 @@ public class Timer {
 		createNewDataFilesIntent = setupIntent( appContext.getString(R.string.create_new_data_files_intent) );
 		checkForNewSurveysIntent = setupIntent( appContext.getString(R.string.check_for_new_surveys_intent) );
 		checkForNewSetting = setupIntent( appContext.getString(R.string.check_for_new_settings_intent) );
+		uploadUserLogIntent = setupIntent(appContext.getString(R.string.upload_user_log_intent));
+		uploadDBLogIntent = setupIntent(appContext.getString(R.string.upload_db_log_intent));
+
 	}
 	
 	/* ######################################################################

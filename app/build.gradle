@@ -19,9 +19,9 @@ android {
         vectorDrawables.useSupportLibrary = true
         applicationId "org.futto.app"
         minSdkVersion 18
-        targetSdkVersion 28
-        versionCode 47      //TODO: update this Beiwe version code for new releases
-        versionName '3.0.3'  //TODO: update this Beiwe version number for new releases
+        targetSdkVersion 29
+        versionCode 50     //TODO: update this Beiwe version code for new releases
+        versionName '3.0.6'  //TODO: update this Beiwe version number for new releases
         setProperty("archivesBaseName", "Futto-$versionName")
         multiDexEnabled true
     }

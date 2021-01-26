@@ -10,8 +10,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
-import androidx.appcompat.widget.Toolbar;
-
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -25,6 +24,15 @@ import org.futto.app.networking.PostRequest;
 import org.futto.app.storage.PersistentData;
 import org.futto.app.survey.TextFieldKeyboard;
 import org.futto.app.ui.utils.AlertsManager;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
+
+import androidx.appcompat.widget.Toolbar;
 
 import static org.futto.app.networking.PostRequest.addWebsitePrefix;
 
@@ -83,8 +91,9 @@ public class RegisterActivity extends RunningBackgroundServiceActivity {
 
 	/** Registration sequence begins here, called when the submit button is pressed.
 	 * @param view */
-	public synchronized void registerButtonPressed(View view) {
+	public synchronized void registerButtonPressed(View view) throws IOException {
 //		String serverUrl = serverUrlInput.getText().toString();
+		Log.d("Register Activity", "registerButtonPressedd");
 		String serverUrl = "https://test.findyourdreamjob.org/";
 		String userID = userIdInput.getText().toString();
 		String tempPassword = tempPasswordInput.getText().toString();
@@ -117,9 +126,70 @@ public class RegisterActivity extends RunningBackgroundServiceActivity {
 			}
 			PersistentData.setLoginCredentials(userID, tempPassword);
 			// Log.d("RegisterActivity", "trying \"" + LoginManager.getPatientID() + "\" with password \"" + LoginManager.getPassword() + "\"" );
-			tryToRegisterWithTheServer(this, addWebsitePrefix(getApplicationContext().getString(R.string.register_url)), newPassword);
+			checkIfDeviceExist(this, addWebsitePrefix("/check_device_id"), addWebsitePrefix(getApplicationContext().getString(R.string.register_url)), newPassword);
+//			tryToRegisterWithTheServer(this, addWebsitePrefix(getApplicationContext().getString(R.string.register_url)), newPassword);
 		}
 	}
+
+	static private void checkIfDeviceExist(final Activity currentActivity, final String url, final String registerUrl, final String newPassword) {
+		new HTTPUIAsync(url, currentActivity) {
+			@Override
+			protected Void doInBackground(Void... arg0) {
+				DeviceInfo.initialize(currentActivity.getApplicationContext());
+//		String params = PostRequest.makeParameter("device_id", DeviceInfo.getAndroidID());
+//		String params = "device_id:" + DeviceInfo.getAndroidID();
+//		Log.d("RegisterActivity", params);
+				URL deviceurl = null;
+				try {
+					deviceurl = new URL(url);
+				} catch (MalformedURLException e) {
+					e.printStackTrace();
+				}
+				HttpURLConnection con = null;
+				try {
+					con = (HttpURLConnection)deviceurl.openConnection();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				try {
+					con.setRequestMethod("POST");
+				} catch (ProtocolException e) {
+					e.printStackTrace();
+				}
+				con.setRequestProperty("Content-Type", "application/json");
+				con.setDoOutput(true);
+				parameters = "{\"device_id\": \"" + DeviceInfo.getAndroidID() + "\"}";
+				Log.d("RegisterActivity", parameters);
+				try (OutputStream os = con.getOutputStream()){
+					os.write(parameters.getBytes());
+					try {
+						os.flush();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				try {
+					responseCode = con.getResponseCode();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			return null;
+			}
+
+			@Override
+			protected void onPostExecute(Void arg) {
+				super.onPostExecute(arg);
+				if (responseCode == 200) {
+					AlertsManager.showAlert(responseCode, "This device is already registered.", currentActivity);
+				}  else {
+					tryToRegisterWithTheServer(currentActivity, registerUrl, newPassword);
+				}
+			}
+		};
+	}
+
 	
 	
 	/**Implements the server request logic for user, device registration. 

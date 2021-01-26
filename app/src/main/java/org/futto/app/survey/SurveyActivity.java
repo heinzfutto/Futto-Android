@@ -3,7 +3,6 @@ package org.futto.app.survey;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -52,6 +51,9 @@ public class SurveyActivity extends SessionActivity implements
 			// Onnela lab requested this line in the debug log
 			TextFileManager.getDebugLogFile().writeEncrypted(initialViewMoment + " opened survey " + surveyId + ".");
 			hasLoadedBefore = true;
+			// mark this survey as seen in user log
+			PersistentData.addUserLog("survey-read", surveyId);
+			Log.i("user-log", "survey read " + surveyId);
 		}
 	}
 
@@ -151,6 +153,7 @@ public class SurveyActivity extends SessionActivity implements
 		SurveyTimingsRecorder.recordSubmit(getApplicationContext());
 		if(state.equals("incomplete")){
 			PersistentData.setSurveyIncompleteState(surveyId,true);
+			PersistentData.addUserLog("survey-incomplete", surveyId);
 		}else{
 
 			// Write the data to a SurveyAnswers file
@@ -161,6 +164,7 @@ public class SurveyActivity extends SessionActivity implements
 				toastMsg = PersistentData.getSurveySubmitSuccessToastText();
 				if(state.equals("complete")){
 					PersistentData.setSurveyNotificationState(surveyId, false);
+					PersistentData.addUserLog("survey-submit", surveyId);
 				}
 			} else {
 				toastMsg = getApplicationContext().getResources().getString(R.string.survey_submit_error_message);

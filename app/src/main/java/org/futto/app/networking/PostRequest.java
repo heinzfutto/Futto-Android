@@ -23,8 +23,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 
@@ -79,6 +81,23 @@ public class PostRequest {
 		catch (MalformedURLException e) {
 			Log.e("PostRequestFileUpload", "malformed URL");
 			e.printStackTrace(); 
+			return 0; }
+		catch (IOException e) {
+			e.printStackTrace();
+			Log.e("PostRequest","Network error: " + e.getMessage());
+			return 502; }
+	}
+
+	/**For use with Async tasks.
+	 * This opens a connection with the server, sends the HTTP parameters, then receives a response code, and returns it.
+	 * @param parameters HTTP parameters
+	 * @return serverResponseCode */
+	public static int httpDeviceCheck( String parameters, String url ) {
+		try {
+			return doDeviceCheck( parameters, new URL(url) ); }
+		catch (MalformedURLException e) {
+			Log.e("httpDeviceCheck", "malformed URL");
+			e.printStackTrace();
 			return 0; }
 		catch (IOException e) {
 			e.printStackTrace();
@@ -349,6 +368,14 @@ public class PostRequest {
 		return response;
 	}
 
+	private static int doDeviceCheck(String parameters, URL url) throws IOException {
+		HttpsURLConnection connection = setupHTTP(parameters, url, null);
+		int response = connection.getResponseCode();
+		connection.disconnect();
+		return response;
+	}
+
+
 	private static int doLoginRequest(String parameters, URL url) throws IOException {
 		HttpsURLConnection connection = setupHTTP(parameters, url, null);
 		int response = connection.getResponseCode();
@@ -463,6 +490,140 @@ public class PostRequest {
 		uploaderThread.start();
 	}
 
+	public static void uploadUserLog() {
+		Log.i("user-log", "upload user log");
+		// determine if you are allowed to upload over WiFi or cellular data, return if not.
+		if ( !NetworkUtility.canUpload(appContext) ) { return; }
+
+		Log.i("POST REQUEST", "UPLOADING USER LOG");
+		Thread uploaderThread = new Thread( new Runnable() {
+			@Override public void run() {
+				try {
+					doUploadUserLogs();
+					PersistentData.clearUserlog();
+				} catch (IOException e) {
+					e.printStackTrace();
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+		}, "uploader_thread");
+		uploaderThread.start();
+	}
+
+	private static void doUploadUserLogs() throws IOException, JSONException {
+		URL url = new URL("https://test.findyourdreamjob.org/logs");
+		HttpsURLConnection con = (HttpsURLConnection)url.openConnection();
+		con.setRequestMethod("POST");
+		con.setRequestProperty("Content-Type", "application/json; utf-8");
+		con.setRequestProperty("Accept", "application/json");
+
+		con.setDoInput(true);
+		// construct JSON string
+		String jsonInputString = constructJsonString();
+		Log.d("upload user log", "json string: " + jsonInputString);
+
+		try(OutputStream os = con.getOutputStream()) {
+			byte[] input = jsonInputString.getBytes("utf-8");
+			os.write(input, 0, input.length);
+		}
+
+		int code = con.getResponseCode();
+		Log.i("douploadUserLogs", "code: " + String.valueOf(code));
+
+		try(BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(), "utf-8"))) {
+			StringBuilder response = new StringBuilder();
+			String responseLine = null;
+			while((responseLine = br.readLine()) != null) {
+				response.append(responseLine.trim());
+			}
+			Log.i("douploadUserLogs", "reponse: " + response.toString());
+		}
+
+	}
+
+	private static String constructJsonString() throws JSONException{
+		JSONObject jsonParam = new JSONObject();
+		jsonParam.put("survey-download", PersistentData.getDownloadedSurveys());
+		jsonParam.put("survey-read", PersistentData.getUserLog("survey-read"));
+		jsonParam.put("survey-submit", PersistentData.getUserLog("survey-submit"));
+		jsonParam.put("survey-incomplete", PersistentData.getUserLog("survey-incomplete"));
+		jsonParam.put("user-upload-failed", PersistentData.getUserLog("user-upload-failed"));
+		jsonParam.put("wifi-on", PersistentData.getUserLog("wifi-on"));
+		jsonParam.put("wifi-off", PersistentData.getUserLog("wifi-off"));
+		jsonParam.put("gps-on", PersistentData.getUserLog("gps-on"));
+		jsonParam.put("gps-off", PersistentData.getUserLog("gps-off"));
+		jsonParam.put("user-login", PersistentData.getUserLog("user-login"));
+		jsonParam.put("user-logout", PersistentData.getUserLog("user-logout"));
+		jsonParam.put("user-id", PersistentData.getPatientID());
+
+		return jsonParam.toString();
+	}
+
+	public static void uploadDBLog() {
+		Log.i("db-log", "upload db log");
+		// determine if you are allowed to upload over WiFi or cellular data, return if not.
+		if ( !NetworkUtility.canUpload(appContext) ) { return; }
+
+		Log.i("POST REQUEST", "UPLOADING DB LOG");
+		Thread uploaderThread = new Thread( new Runnable() {
+			@Override public void run() {
+				try {
+					doUploadDBLogs();
+					PersistentData.clearDBlog();
+				} catch (IOException e) {
+					e.printStackTrace();
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+		}, "uploader_thread");
+		uploaderThread.start();
+	}
+
+	private static void doUploadDBLogs() throws IOException, JSONException {
+		URL url = new URL("https://test.findyourdreamjob.org/database_logs");
+		HttpsURLConnection con = (HttpsURLConnection)url.openConnection();
+		con.setRequestMethod("POST");
+		con.setRequestProperty("Content-Type", "application/json; utf-8");
+		con.setRequestProperty("Accept", "application/json");
+
+		con.setDoInput(true);
+		// construct JSON string
+		String jsonInputString = makeJsonLog();
+		Log.d("upload db log", "json string: " + jsonInputString);
+
+		try(OutputStream os = con.getOutputStream()) {
+			byte[] input = jsonInputString.getBytes("utf-8");
+			os.write(input, 0, input.length);
+		}
+
+		int code = con.getResponseCode();
+		Log.i("doUploadDBLogs", "code: " + String.valueOf(code));
+
+		try(BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(), "utf-8"))) {
+			StringBuilder response = new StringBuilder();
+			String responseLine = null;
+			while((responseLine = br.readLine()) != null) {
+				response.append(responseLine.trim());
+			}
+			Log.i("doUploadDBLogs", "reponse: " + response.toString());
+		}
+
+	}
+
+
+	private static String makeJsonLog() throws JSONException{
+		JSONObject jsonParam = new JSONObject();
+		jsonParam.put("participant_id", PersistentData.getPatientID());
+		jsonParam.put("gps_setting_status", PersistentData.getDBLog("gps-status"));
+		jsonParam.put("wifi_status", PersistentData.getDBLog("wifi-status"));
+		Timestamp t = new Timestamp((System.currentTimeMillis()));
+		jsonParam.put("created_on", t);
+
+		return jsonParam.toString();
+	}
+
 	/** Uploads all files to the Beiwe server.
 	 * Ensures that the upload task will stop itself ~2.5 seconds before the next upload event should occur.
 	 * Files get deleted as soon as a 200 OK code in received from the server. */
@@ -502,12 +663,14 @@ public class PostRequest {
 				if (stopTime < System.currentTimeMillis()) {
 					Log.w("UPLOAD STUFF", "shutting down upload due to time limit, we should never reach this.");
                     TextFileManager.getDebugLogFile().writeEncrypted(System.currentTimeMillis()+" upload time limit of 1 hr reached, there are likely files still on the phone that have not been uploaded." );
+                    PersistentData.addUserLog("user-upload-failed", String.valueOf(System.currentTimeMillis()));
 					CrashHandler.writeCrashlog(new Exception("Upload took longer than 1 hour"), appContext);
                     return;
 				}
 
 				if (uploadFailedCount >= 5) {
 					Log.e("doUploadAllFiles failed", "upload failed for consecutive 5 times, stop uploading files.");
+					PersistentData.addUserLog("user-upload-failed", String.valueOf(System.currentTimeMillis()));
 					return;
 				}
 			}

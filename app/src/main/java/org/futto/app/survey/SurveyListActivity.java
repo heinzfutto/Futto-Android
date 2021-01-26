@@ -3,9 +3,7 @@ package org.futto.app.survey;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
+import android.util.Log;
 import android.widget.ListView;
 
 import org.futto.app.R;
@@ -15,6 +13,8 @@ import org.futto.app.ui.adapters.SurveyAdapter;
 import org.futto.app.ui.user.MainMenuActivity;
 
 import java.util.ArrayList;
+
+import androidx.appcompat.widget.Toolbar;
 
 public class SurveyListActivity extends SessionActivity {
 
@@ -34,7 +34,16 @@ public class SurveyListActivity extends SessionActivity {
         surveyState = new ArrayList<String>();
         for(int i=0;i<PersistentData.getSurveyIds().size();i++){
             String tmpsurvey = PersistentData.getSurveyIds().get(i);
-            if (PersistentData.getSurveyNotificationState( tmpsurvey)) {
+            Log.d("SurveyListActivity", tmpsurvey);
+            Log.d("SurveyListActivity", PersistentData.getSurveyNotificationState( tmpsurvey).toString());
+//            if(PersistentData.getSurveyIncompleteState(tmpsurvey) == true){
+//                surveyId.add(PersistentData.getSurveyIds().get(i));
+//                surveyState.add("Incomplete");
+//            }else{
+//                surveyId.add(PersistentData.getSurveyIds().get(i));
+//                surveyState.add("new");
+//            }
+            if (PersistentData.getSurveyNotificationState( tmpsurvey) && Long.parseLong(PersistentData.getSurveyTimes(tmpsurvey)) < System.currentTimeMillis()) {
                 if(PersistentData.getSurveyIncompleteState(tmpsurvey) == true){
                     surveyId.add(PersistentData.getSurveyIds().get(i));
                     surveyState.add("Incomplete");

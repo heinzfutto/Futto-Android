@@ -97,8 +97,19 @@ public class GPSListener implements LocationListener {
 		Boolean coarsePermissible = PermissionHandler.checkAccessCoarseLocation(appContext);
 		Boolean finePermissible = PermissionHandler.checkAccessFineLocation(appContext);
 
-		if ( !coarsePermissible ) { makeDebugLogStatement("Beiwe has not been granted permissions for coarse location updates."); }
-		if ( !finePermissible ) { makeDebugLogStatement("Beiwe has not been granted permissions for fine location updates."); }
+		if ( !coarsePermissible ) {
+			makeDebugLogStatement("Beiwe has not been granted permissions for coarse location updates.");
+			PersistentData.addUserLog("gps-off", "Beiwe has not been granted permissions for coarse location updates. TimeStamp: " + System.currentTimeMillis());
+			PersistentData.setDBLog("gps-status", "off");
+			Log.i("db-log", "gps-status off");
+		}
+		if ( !finePermissible ) {
+			makeDebugLogStatement("Beiwe has not been granted permissions for fine location updates.");
+			PersistentData.addUserLog("gps-off", "Beiwe has not been granted permissions for fine location updates. TimeStamp: " + System.currentTimeMillis());
+			PersistentData.setDBLog("gps-status", "off");
+			Log.i("db-log", "gps-status off");
+
+		}
 
 		Boolean fineExists = pkgManager.hasSystemFeature(PackageManager.FEATURE_LOCATION_GPS);
 		Boolean coarseExists = pkgManager.hasSystemFeature(PackageManager.FEATURE_LOCATION_NETWORK);
@@ -127,8 +138,19 @@ public class GPSListener implements LocationListener {
 		Boolean fineAvailable = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
 		Boolean coarseAvailable = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 		//using single & because we don't want to short-circuit these logical statements, we want exclusive behavior.
-		if (!fineAvailable) { makeDebugLogStatement("GPS data stream warning: fine location updates are currently disabled."); }
-		if (!coarseAvailable) { makeDebugLogStatement("GPS data stream warning: coarse location updates are currently disabled."); }
+		if (!fineAvailable) {
+			makeDebugLogStatement("GPS data stream warning: fine location updates are currently disabled.");
+			PersistentData.addUserLog("gps-off", "GPS data stream warning: fine location updates are currently disabled. TimeStamp: " + System.currentTimeMillis());
+		}
+		if (!coarseAvailable) {
+			makeDebugLogStatement("GPS data stream warning: coarse location updates are currently disabled.");
+			PersistentData.addUserLog("gps-off", "GPS data stream warning: coarse location updates are currently disabled. TimeStamp: " + System.currentTimeMillis());
+		}
+
+		if (!fineAvailable && !coarseAvailable) {
+			PersistentData.setDBLog("gps-status", "off");
+			Log.i("db-log", "gps-status off");
+		}
 
 		enabled = true;
 	}

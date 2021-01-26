@@ -52,7 +52,7 @@
     <string name="http_message_405">Sorry, this User ID already has a phone registered. Please contact the research staff and ask them to clear your registration so that you can register this new phone.</string>
     <string name="http_message_internet_disconnected">It looks like you\'re not connected to the internet- please connect to the internet and try again.</string>
     <string name="http_message_server_not_found">Are you sure the URL for the study is correct?  Futto can\'t connect to the server.</string>
-    <string name="http_message_unknown_response_code">An unknown error occurred.</string>
+    <string name="http_message_unknown_response_code">The app received an unknown response code from the server. Please try again later or contact the support team.</string>
 
     <!-- Survey Activity Strings -->
     <string name="survey_next_button_text">Next</string>
@@ -174,6 +174,8 @@
     <string name="check_for_new_surveys_intent">Check for new surveys</string>
     <string name="check_for_new_settings_intent">Check for new settings</string>
     <string name="run_wifi_log">Wifi Log</string>
+    <string name="upload_user_log_intent">Upload user logs</string>
+    <string name="upload_db_log_intent">Upload db logs</string>
 
     <!-- Menu Items -->
     <string name="menu_sign_out">Sign Out</string>

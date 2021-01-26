@@ -15,8 +15,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.Settings;
-
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -45,6 +43,8 @@ import org.futto.app.ui.coupon.NotificationActivity;
 import org.futto.app.ui.user.AboutActivityLoggedIn;
 import org.futto.app.ui.user.AboutActivityLoggedOut;
 import org.futto.app.ui.user.MapsActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * All Activities in the app extend this Activity.  It ensures that the app's key services (i.e.
@@ -271,6 +271,7 @@ public class RunningBackgroundServiceActivity extends AppCompatActivity {
     public void survey(View v) {
         Intent i = new Intent(this, SurveyListActivity.class);
 //        Intent i = new Intent(this, SurveyActivity.class);
+//        sendBroadcast(Timer.checkForNewSurveysIntent);
         if(NetworkUtility.networkIsAvailable(this))startActivity(i);
         else NetWorkIsNotAvailable(v);
     }
